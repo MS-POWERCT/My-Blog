@@ -13,8 +13,8 @@ type: "links"
 :::
 
 ```yaml
-name: 韩小韩博客
-link: https://www.vvhan.com/
-avatar: https://q1.qlogo.cn/g?b=qq&nk=1655466387&s=640
-desc: 运气是计划之外的东西.
+name: 陈义程博客
+link: https://www.chenyicheng.cn/
+avatar: https://wp-cdn.4ce.cn/v2/U0pG3Xt.png
+desc: 有人辞官归故里 有人星夜赶科场.
 ```
