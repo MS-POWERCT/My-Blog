@@ -5,6 +5,11 @@ export default {
   // 注意：图片请用 vh-img-flex 类包裹
   data: [
     {
+      'date':'2026-07-23 14:00:00',
+      'tags':['日常','图片','旅行'],
+      'content': '2020武功山之行：徒步登山，穿越草甸，云海翻涌如仙境，星空璀璨似银河。一步一景，皆是难忘的回忆。<p class="vh-img-flex"><img src="/assets/images/talking/wugushan/AAA_3065.JPG"><img src="/assets/images/talking/wugushan/AAA_3106.JPG"><img src="/assets/images/talking/wugushan/AAA_3294.jpg"><img src="/assets/images/talking/wugushan/IMG_6105.JPG"><img src="/assets/images/talking/wugushan/IMG_6128.JPG"><img src="/assets/images/talking/wugushan/IMG_6177.jpg"><img src="/assets/images/talking/wugushan/IMG_6240.JPG"><img src="/assets/images/talking/wugushan/IMG_6242.JPG"><img src="/assets/images/talking/wugushan/IMG_6244.JPG"><img src="/assets/images/talking/wugushan/IMG_6245.JPG"><img src="/assets/images/talking/wugushan/IMG_6246.JPG"><img src="/assets/images/talking/wugushan/IMG_6247.JPG"><img src="/assets/images/talking/wugushan/IMG_6249.JPG"><img src="/assets/images/talking/wugushan/IMG_6250.JPG"><img src="/assets/images/talking/wugushan/IMG_8848.JPG"><img src="/assets/images/talking/wugushan/IMG_8850.JPG"><img src="/assets/images/talking/wugushan/sajdhkj.jpg"></p>'
+     },
+    {
       'date':'2026-07-23 11:31:06',
       'tags':['日常'],
       'content': '西西弗书店<p class="vh-img-flex"><img src="/assets/images/talking/people/xixifushudian.jpg"></p>'
