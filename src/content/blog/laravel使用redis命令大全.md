@@ -5,9 +5,10 @@ tags:
   - laravel
   - redis
 id: laravel-redis
-cover: /assets/images/blog1.JPG
+cover: "/assets/images/banner/f37068307476b8b1.webp"
 date: 2026-07-17 22:51
 ---
+
 ## 标题
 
 该文章系统性地梳理了在 Laravel 框架中使用 Redis 的各类原生命令，涵盖了字符串、哈希、列表、集合、有序集合及事务等核心数据结构的操作方法。以下是对其内容的逻辑重组与结构化整理，适用于导入 Obsidian 等知识管理工具。
@@ -16,15 +17,17 @@ date: 2026-07-17 22:51
 
 在 Laravel 中，可以通过 `Redis` Facade 获取 Redis 连接实例，进而执行所有原生命令。
 
-``` PHP
+```PHP
 // 返回 Redis 连接实例，可以操作所有 Redis 原生命令
 $redis = Redis::connection();
 
 // 判断指定键是否存在
-Redis::exists('key'); // 返回布尔值 
+Redis::exists('key'); // 返回布尔值
 ```
+
 ## 二、字符串类型操作命令
-``` PHP
+
+```PHP
 //string类型储存
 Redis::set('key','value');
 //获取key的值
@@ -67,7 +70,8 @@ Redis::append('key',value);
 ```
 
 ## 哈希
-``` PHP
+
+```PHP
 //删除一个或多个哈希表字段
 Redis::hdel('key',field1,field2);
 //查看哈希表 key 中，指定的字段是否存在
@@ -78,9 +82,9 @@ Redis::hset('key','field','value');
 Redis::hget('key');
 //获取在哈希表中指定 key 的所有字段和值
 Redis::hgetall('key');
-//为哈希表 key 中的指定字段的整数值加上增量 increment 
+//为哈希表 key 中的指定字段的整数值加上增量 increment
 Redis::hincrby(key,field,increment)
-//为哈希表 key 中的指定字段的浮点数值加上增量 increment 
+//为哈希表 key 中的指定字段的浮点数值加上增量 increment
 Redis::hincrbyfloat(key,field,increment)
 //获取所有哈希表中的字段
 Redis::hkeys('key');
@@ -99,7 +103,8 @@ HSCAN key cursor [MATCH pattern] [COUNT count]
 ```
 
 ## 列表类型
-``` PHP
+
+```PHP
 //将一个或多个值插入到列表头部
 Redis::lpush(key,value1 ,value2)
 //将一个或多个值插入到列表尾部
@@ -155,7 +160,8 @@ Redis::ltrim(key,start ,stop)
 ```
 
 ## set类型
-``` PHP
+
+```PHP
 //向集合添加一个或多个成员
 Redis::sadd('key',member1 ,member2);
 //获取集合的成员数
@@ -196,7 +202,8 @@ SSCAN myset 0 MATCH element* COUNT 10
 ```
 
 ## Zset 类型
-``` PHP
+
+```PHP
 //向有序集合添加一个或多个成员，或者更新已存在成员的分数
 Redis::zadd('key',score1 ,member1 ,[score2 member2]);
 //获取有序集合的成员数
@@ -231,7 +238,7 @@ Redis::zrevrange('key',start  ,stop,[WITHSCORES]);
 //示例用法：
 //$arr = [
 //        'WITHSCORES' => true,
-//        'limit' => [0,2]    
+//        'limit' => [0,2]
 //    ];
 //    $res = Redis::zrevrangebyscore("my_sorted_set", 4, 1,$arr);
 Redis::zrevrangebyscore('key',max,min ,[WITHSCORES],[LIMIT] );
@@ -268,7 +275,8 @@ $result = Redis::zscan($key, $cursor, [
 ```
 
 ## 事务
-``` PHP
+
+```PHP
 //取消事务，放弃执行事务块内的所有命令
 Redis::discard();
 //执行所有事务块内的命令

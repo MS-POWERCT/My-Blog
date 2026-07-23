@@ -4,11 +4,11 @@ categories: Code
 tags:
   - FreshRSS
 id: fresh-rss
-cover: /assets/images/blog1.JPG
+cover: "/assets/images/banner/16062e6599b2ea8b.webp"
 date: 2026-07-17 14:53
 ---
-# 重要提现，该内容是通过ai编写的本人并没有实际跑过，目前要完成这个功能是需要一定的技术的他是通过php跑在服务器上的，所以会产生费用，如果你只是想体验一下圈子功能可以使用本地data模式，会轻松很多
 
+# 重要提现，该内容是通过ai编写的本人并没有实际跑过，目前要完成这个功能是需要一定的技术的他是通过php跑在服务器上的，所以会产生费用，如果你只是想体验一下圈子功能可以使用本地data模式，会轻松很多
 
 vhAstro-Theme 的"圈子"功能可以自动聚合友链博客的最新文章，展示在一个类似朋友圈的动态流页面。本文介绍如何从零部署 FreshRSS 并接入主题。
 
@@ -46,7 +46,7 @@ services:
       - freshrss_extensions:/var/www/FreshRSS/extensions
     environment:
       TZ: Asia/Shanghai
-      CRON_MIN: "*/20"  # 每 20 分钟更新一次订阅
+      CRON_MIN: "*/20" # 每 20 分钟更新一次订阅
 
 volumes:
   freshrss_data:
@@ -158,11 +158,11 @@ echo json_encode([
 
 ### 3.2 配置信息说明
 
-| 配置项 | 说明 |
-|--------|------|
+| 配置项                        | 说明                                          |
+| ----------------------------- | --------------------------------------------- |
 | `Access-Control-Allow-Origin` | 改成你的博客域名，如 `https://chenyicheng.cn` |
-| `$user` | 你的 FreshRSS 管理员用户名 |
-| `$category` | 你在 FreshRSS 中给友链创建的分类名 |
+| `$user`                       | 你的 FreshRSS 管理员用户名                    |
+| `$category`                   | 你在 FreshRSS 中给友链创建的分类名            |
 
 ### 3.3 Docker 部署时挂载 API 文件
 
@@ -229,13 +229,13 @@ http://你的服务器IP:8080/api/friends.php?items=5&offset=0
 ```ts
 export default {
   // 填入你的 FreshRSS API 地址
-  api: 'http://你的服务器IP:8080/api/friends.php',
-  
+  api: "http://你的服务器IP:8080/api/friends.php",
+
   // api 为空时使用静态数据，填了 api 后静态数据不会生效
   data: [
     // 可以留空，也可以保留作为 API 不可用时的兜底数据
-  ]
-}
+  ],
+};
 ```
 
 ### 5.2 数据格式映射
@@ -244,13 +244,13 @@ export default {
 
 主题静态数据的字段：
 
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| `title` | string | 文章标题 |
-| `auther` | string | 作者/博客名（注意：主题里拼写如此） |
-| `date` | string | 发布日期 |
-| `link` | string | 文章链接 |
-| `content` | string | 文章摘要（可选） |
+| 字段      | 类型   | 说明                                |
+| --------- | ------ | ----------------------------------- |
+| `title`   | string | 文章标题                            |
+| `auther`  | string | 作者/博客名（注意：主题里拼写如此） |
+| `date`    | string | 发布日期                            |
+| `link`    | string | 文章链接                            |
+| `content` | string | 文章摘要（可选）                    |
 
 如果需要让 API 输出匹配这个格式，修改 `friends.php` 的输出部分，把字段名对应调整即可。
 
