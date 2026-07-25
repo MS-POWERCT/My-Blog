@@ -5,6 +5,11 @@ export default {
   // 注意：图片请用 vh-img-flex 类包裹
   data: [
     {
+      'date':'2026-07-24 22:58:00',
+      'tags':['日常', '废话', '柏拉图'],
+      'content': '柏拉图说过：一人做事一人当，小叮做事小叮当，当当做事当当当'
+    },
+    {
       'date':'2026-07-24 00:00:00',
       'tags':['日常','图片'],
       'content': '<p class="vh-img-flex"><img src="/assets/images/talking/people/IMG_0059.JPG"><img src="/assets/images/talking/people/IMG_0062.JPG"></p>'
