@@ -32,23 +32,25 @@ export default {
       "link": "https://travel.yardvisionsite.com/",
       "avatar": "https://www.yardvisionsite.com/wp-content/uploads/2025/12/profile_pic.jpg",
       "descr": "特别推荐给热爱摄影与打卡的旅人."
-    },{
-      "name": "santisify site",
-      "link": "https://santisify.top/",
-      "avatar": "https://cn.cravatar.com/avatar/737CF21C04FCD75BADF35BE0A797DE8A?s=200",
-      "descr": "to simplify technology to its purest, most powerful form."
     },
     {
-      "name": "我的生活记载",
-      "link": "http://www.yimem.com",
-      "avatar": "http://www.yimem.com/img/favicon.ico",
-      "descr": "看那芳华疾如南柯一梦"
+      "name": "天渺studio",
+      "link": "https://tianmiao.site",
+      "avatar": "https://s21.ax1x.com/2024/12/22/pAXtJat.jpg",
+      "descr": "天渺studio的小站&日志记录"
     },
     {
-      "name": "小米里的大麦",
-      "link": "https://cn.minbit.top",
-      "avatar": "https://github.com/huangcancan-xbc/Drawing-bed/blob/master/Blog/20250307201719879.png?raw=true",
-      "descr": "芝生于深谷，不以无人而不芳"
+      "name": "冷月笙寒的小窝",
+      "link": "https://lygalaxy.cn/",
+      "avatar": "https://lygalaxy.cn/uploads/20260128_200240_6979fae094c7b.jpg",
+      "descr": "发现巷子里的那颗星星(技术与生活分享)"
+    },
+    {
+      "name": "Antx’s Blog",
+      "link": "https://blog.antx.cc",
+      "avatar": "https://halo-oss-qiniu.antx.cc/files/2025/07/30/uyeowvrywqlkttlj.png",
+      "descr": "别怕路远，走一步就有一步的光亮。",
+      "rss": "https://blog.antx.cc/rss.xml"
     }
   ]
 }
