@@ -87,7 +87,7 @@ export default {
     {
       'date':'2026-07-19 20:41:06',
       'tags':['日常', '图片'],
-      'content':'最近拍的一些照片，记录生活中的点点滴滴。<p class="vh-img-flex"><img src="/assets/images/talking/people/IMG_2660.JPG"><img src="/assets/images/talking/people/IMG_2770.JPG"><img src="/assets/images/talking/people/IMG_2538.JPG"><img src="/assets/images/talking/people/IMG_2571.JPG"><img src="/assets/images/talking/people/IMG_2537.JPG"><img src="/assets/images/talking/people/IMG_2766.JPG"><img src="/assets/images/talking/people/IMG_2771.JPG"><img src="/assets/images/talking/people/IMG_2667.JPG"><img src="/assets/images/talking/people/IMG_2509.JPG"><img src="/assets/images/talking/people/IMG_2765.JPG"><img src="/assets/images/talking/people/IMG_2590.JPG"><img src="/assets/images/talking/people/IMG_2505.JPG"></p>'
+      'content':'最近拍的一些照片，记录生活中的点点滴滴。<p class="vh-img-flex"><img src="/assets/images/talking/people/IMG_2660.JPG"><img src="/assets/images/talking/people/IMG_2770.JPG"><img src="/assets/images/talking/people/IMG_2538.JPG"><img src="/assets/images/talking/people/IMG_2571.JPG"><img src="/assets/images/talking/people/IMG_2537.JPG"><img src="/assets/images/talking/people/IMG_2766.JPG"><img src="/assets/images/talking/people/IMG_2771.JPG"><img src="/assets/images/talking/people/IMG_2667.JPG"><img src="/assets/images/talking/people/IMG_2765.JPG"><img src="/assets/images/talking/people/IMG_2590.JPG"></p>'
     },
     {
       date: '2026-07-19 18:54:06',
