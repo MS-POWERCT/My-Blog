@@ -10,7 +10,7 @@ cover: "/assets/images/banner/536981d29e42bd29.webp"
 date: 2026-07-18 22:45
 ---
 
-网站链接：[小汤圆](https://m.powerct.cn)
+网站链接：[自律青年](https://m.powerct.cn)
 
 项目名称暂时使用这个吧，这应该算第一个版本，还有很要可以开发和更新的
 

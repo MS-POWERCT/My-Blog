@@ -59,7 +59,7 @@ export default {
     { text: '昔日', link: '/archives', icon: 'Nav_archives' },
     // { text: '留言', link: '/message', icon: 'Nav_message' },
     // { text: '关于', link: '/about', icon: 'Nav_about' },
-    { text: '小汤圆', link: 'https://m.powerct.cn/', target: true, icon: 'Nav_link' },
+    { text: '自律青年', link: 'https://m.powerct.cn/', target: true, icon: 'Nav_link' },
     { text: '文字农场', link: 'https://farm.powerct.cn/', target: true, icon: 'Nav_link' },
   ],
   // 侧边栏个人网站
@@ -69,10 +69,16 @@ export default {
     { text: 'Github', link: 'https://github.com/MS-POWERCT', icon: 'WebSite_github' },
     // https://www.zhihu.com/people/chen-yi-cheng-73-60
     { text: '知乎', link: 'https://www.zhihu.com/people/chen-yi-cheng-73-60', icon: 'WebSite_zhihu' },
+    // { text: 'QQ', link: 'https://wpa.qq.com/msgrd?v=3&uin=2446762079&site=qq&menu=yes', icon: 'brand-qq' },
+    // { text: '微信', link: 'https://weixin.qq.com/', icon: 'brand-wechat' },
     // { text: '每日热榜', link: 'https://hot.vvhan.com', icon: 'WebSite_hot' },
-    { text: '骤雨重山图床', link: 'https://wp-cdn.4ce.cn', icon: 'WebSite_img' },
     // { text: 'HanAnalytics', link: 'https://analytics.vvhan.com', icon: 'WebSite_analytics' },
-  ],
+    // 主页链接打开方式：https://www.xiaohongshu.com/user/profile/{你的小红书ID}
+    { text: '小红书', link: 'https://www.xiaohongshu.com/user/profile/58647dd96a6a697b89d43c99', icon: 'WebSite_xiaohongshu' },
+    // 主页链接打开方式：https://www.douyin.com/user/{你的抖音sec_uid}
+    { text: '抖音', link: 'https://v.douyin.com/2hgO8v0EzzE', icon: 'WebSite_douyin' },
+    { text: '骤雨重山图床', link: 'https://wp-cdn.4ce.cn', icon: 'WebSite_img' },
+  ],  
   // 侧边栏展示
   AsideShow: {
     // 是否展示个人网站

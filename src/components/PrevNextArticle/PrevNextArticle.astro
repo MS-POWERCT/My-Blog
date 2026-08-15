@@ -1,9 +1,21 @@
 ---
 const { prev, next } = Astro.props;
 import "./PrevNextArticle.less";
+// id === '#' 表示没有上/下一篇，保持原样不跳转；否则用绝对路径 /article/{id} 避免相对路径在线上被拼上当前文章id
+const toUrl = (id: string) => (id === "#" ? "#" : `/article/${id}`);
 ---
 
 <section class="vh-otarticle">
-	<a class="art-item" style={`background-image: url('${prev.cover}')`} href={prev.id}><span class="vh-ellipsis line-2">{prev.title}</span></a>
-	<a class="art-item" style={`background-image: url('${next.cover}')`} href={next.id}><span class="vh-ellipsis line-2">{next.title}</span></a>
+  <a
+    class="art-item"
+    style={`background-image: url('${prev.cover}')`}
+    href={toUrl(prev.id)}
+    ><span class="vh-ellipsis line-2">{prev.title}</span></a
+  >
+  <a
+    class="art-item"
+    style={`background-image: url('${next.cover}')`}
+    href={toUrl(next.id)}
+    ><span class="vh-ellipsis line-2">{next.title}</span></a
+  >
 </section>
