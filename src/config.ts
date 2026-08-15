@@ -58,7 +58,7 @@ export default {
     { text: '动态', link: '/talking', icon: 'Nav_talking' },
     { text: '昔日', link: '/archives', icon: 'Nav_archives' },
     // { text: '留言', link: '/message', icon: 'Nav_message' },
-    // { text: '关于', link: '/about', icon: 'Nav_about' },
+    { text: '关于', link: '/about', icon: 'Nav_about' },
     { text: '自律青年', link: 'https://m.powerct.cn/', target: true, icon: 'Nav_link' },
     { text: '文字农场', link: 'https://farm.powerct.cn/', target: true, icon: 'Nav_link' },
   ],
@@ -77,7 +77,7 @@ export default {
     { text: '小红书', link: 'https://www.xiaohongshu.com/user/profile/58647dd96a6a697b89d43c99', icon: 'WebSite_xiaohongshu' },
     // 主页链接打开方式：https://www.douyin.com/user/{你的抖音sec_uid}
     { text: '抖音', link: 'https://v.douyin.com/2hgO8v0EzzE', icon: 'WebSite_douyin' },
-    { text: '骤雨重山图床', link: 'https://wp-cdn.4ce.cn', icon: 'WebSite_img' },
+    // { text: '骤雨重山图床', link: 'https://wp-cdn.4ce.cn', icon: 'WebSite_img' },
   ],  
   // 侧边栏展示
   AsideShow: {
@@ -88,7 +88,20 @@ export default {
     // 是否展示标签
     TagsShow: true,
     // 是否展示推荐文章
-    recommendArticleShow: true
+    recommendArticleShow: true,
+    // 是否展示侧边栏流量卡广告
+    PhoneCardShow: false,
+  },
+  // 侧边栏流量卡广告配置 (PhoneCardShow 为 true 时生效)
+  PhoneCard: {
+    // 标题
+    Title: '精品流量卡',
+    // 跳转链接
+    Link: 'https://h5.lot-ml.com/ProductEn/Index/548465d7349b6599',
+    // 图片路径 (public 目录下路径)
+    Image: '/assets/images/phone-card.webp',
+    // 图片 alt
+    Alt: '精品大流量卡',
   },
   // DNS预解析地址
   DNSOptimization: [

@@ -1,0 +1,275 @@
+---
+import SITE_CONFIG from "@/config";
+import About from "./_about.config";
+import { getCountInfo } from "@/utils/getPostInfo";
+import Layout from "@/layouts/Layout/Layout.astro";
+import "./_about.less";
+
+const { Title, Avatar, CreateTime } = SITE_CONFIG;
+const countInfo = getCountInfo();
+
+// ===== 计算年龄 / 建站天数 =====
+const diffDays = (from: string, to: Date = new Date()) => {
+  try {
+    const start = new Date(from).getTime();
+    if (isNaN(start)) return 0;
+    return Math.max(
+      0,
+      Math.floor((to.getTime() - start) / (1000 * 60 * 60 * 24)),
+    );
+  } catch {
+    return 0;
+  }
+};
+const diffYears = (from: string) => {
+  try {
+    const s = new Date(from);
+    const t = new Date();
+    let y = t.getFullYear() - s.getFullYear();
+    const m = t.getMonth() - s.getMonth();
+    if (m < 0 || (m === 0 && t.getDate() < s.getDate())) y--;
+    return Math.max(0, y);
+  } catch {
+    return 0;
+  }
+};
+const age = diffYears(About.BirthDay);
+const siteDays = diffDays(CreateTime);
+const aliveDays = diffDays(About.BirthDay);
+const avatar = About.Avatar || Avatar;
+
+// 个人介绍 (自动加段落包装)
+const IntroHtml = About.Intro.map((p) => `<p>${p}</p>`).join("");
+
+// 联系我彩蛋：编码联系方式，和韩小韩风格一致
+const contactSeed = {
+  name: About.Nickname,
+  email: (About.Contacts.find((c) => c.label === "Email") || {}).value || "",
+  github: (About.Contacts.find((c) => c.label === "GitHub") || {}).value || "",
+  city: (About.Contacts.find((c) => c.label === "所在地") || {}).value || "",
+  site: SITE_CONFIG.Site,
+};
+const seedStr = JSON.stringify(contactSeed);
+const charCodes: number[] = [];
+for (let i = 0; i < seedStr.length; i++) charCodes.push(seedStr.charCodeAt(i));
+// 切分成 4 段模拟韩小韩效果
+const q1 = charCodes.slice(0, Math.ceil(charCodes.length * 0.25));
+const q2 = charCodes.slice(
+  Math.ceil(charCodes.length * 0.25),
+  Math.ceil(charCodes.length * 0.5),
+);
+const q3 = charCodes.slice(
+  Math.ceil(charCodes.length * 0.5),
+  Math.ceil(charCodes.length * 0.75),
+);
+const q4 = charCodes.slice(Math.ceil(charCodes.length * 0.75));
+const joinChunk = (arr: number[]) => arr.join(", ");
+---
+
+<Layout
+  title={`关于 - ${Title}`}
+  description={`${About.Nickname} 的关于页面 · ${About.JobTitle}`}
+  activeNav="about"
+>
+  <section class="vh-container vh-about">
+    <!-- 顶部 Hero 卡 -->
+    <div class="vh-about-hero">
+      <div class="vh-about-hero-inner">
+        <img
+          class="vh-about-avatar"
+          src={avatar}
+          alt={About.Nickname}
+          loading="lazy"
+        />
+        <div class="vh-about-hero-info">
+          <div class="vh-about-hero-title">{About.BannerTitle}</div>
+          <div class="vh-about-hero-sub">{About.BannerSubtitle}</div>
+          <span class="vh-about-hero-job">{About.JobTitle}</span>
+          <div class="vh-about-tags">
+            {About.Tags.map((tag) => <span class="vh-about-tag">{tag}</span>)}
+          </div>
+        </div>
+      </div>
+
+      <div class="vh-about-stats">
+        <div class="vh-about-stat">
+          <div class="vh-about-stat-num">{age}</div>
+          <div class="vh-about-stat-label">年龄 (岁)</div>
+        </div>
+        <div class="vh-about-stat">
+          <div class="vh-about-stat-num">{aliveDays.toLocaleString()}</div>
+          <div class="vh-about-stat-label">已活 (天)</div>
+        </div>
+        <div class="vh-about-stat">
+          <div class="vh-about-stat-num">{siteDays}</div>
+          <div class="vh-about-stat-label">建站 (天)</div>
+        </div>
+        <div class="vh-about-stat">
+          <div class="vh-about-stat-num">{countInfo.ArticleCount}</div>
+          <div class="vh-about-stat-label">文章 (篇)</div>
+        </div>
+        <div class="vh-about-stat">
+          <div class="vh-about-stat-num">{countInfo.CategoryCount}</div>
+          <div class="vh-about-stat-label">分类 (个)</div>
+        </div>
+        <div class="vh-about-stat">
+          <div class="vh-about-stat-num">{countInfo.TagCount}</div>
+          <div class="vh-about-stat-label">标签 (个)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 自我介绍 + 理念 + 未来 -->
+    <div class="vh-about-card">
+      <h2>关于我</h2>
+      <div class="vh-about-hello">{About.Hello}</div>
+      <div class="vh-about-intro">
+        <Fragment set:html={IntroHtml} />
+      </div>
+
+      <h3>✦ 技术理念</h3>
+      <div class="vh-about-beliefs">
+        {
+          About.Beliefs.map((b) => (
+            <div class="vh-about-belief">
+              <div class="vh-about-belief-icon">{b.icon}</div>
+              <div class="vh-about-belief-title">{b.title}</div>
+              <div class="vh-about-belief-text">{b.text}</div>
+            </div>
+          ))
+        }
+      </div>
+
+      <h3>🎯 未来方向</h3>
+      <ul class="vh-about-future">
+        {About.Future.map((f) => <li>{f}</li>)}
+      </ul>
+    </div>
+
+    <!-- 技能树 -->
+    <div class="vh-about-card">
+      <h2>技能树</h2>
+      {
+        About.Skills.map((s) => (
+          <div class="vh-about-skill">
+            <div class="vh-about-skill-head">
+              <>
+                <strong>{s.name}</strong>
+                <span>{s.value}%</span>
+              </>
+            </div>
+            <div class="vh-about-skill-bar">
+              <div class="vh-about-skill-fill" data-value={s.value} />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- 时间线 -->
+    <div class="vh-about-card">
+      <h2>成长时间线</h2>
+      <div class="vh-about-timeline">
+        {
+          About.Timeline.map((t) => (
+            <div class="vh-about-tl-item">
+              <div class="vh-about-tl-date">{t.date}</div>
+              <div class="vh-about-tl-title">{t.title}</div>
+              <div class="vh-about-tl-desc">{t.desc}</div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- 小站点 -->
+    <div class="vh-about-card">
+      <h2>个人小站</h2>
+      <table class="vh-about-sites">
+        <tbody>
+          {
+            About.Sites.map((s) => (
+              <tr class:list={[s.highlight && "hl"]}>
+                <th>{s.name}</th>
+                <td>
+                  <a href={s.link} target="_blank" rel="noopener noreferrer">
+                    {s.link}
+                  </a>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 联系我 -->
+    <div class="vh-about-card">
+      <h2>联系我</h2>
+      <div class="vh-about-contacts">
+        {
+          About.Contacts.map((c) => (
+            <div class="vh-about-contact">
+              <div class="vh-about-contact-label">{c.label}</div>
+              <div class="vh-about-contact-val">
+                {c.link ? (
+                  <a
+                    href={c.link}
+                    target={c.link.startsWith("http") ? "_blank" : "_self"}
+                    rel={c.link.startsWith("http") ? "noopener noreferrer" : ""}
+                  >
+                    {c.value}
+                  </a>
+                ) : (
+                  c.value
+                )}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- <h3>✦ 彩蛋 · 解码我</h3>
+      <pre
+        class="vh-about-code"><code set:html={`// 在浏览器 Console 粘贴即可得到我的联系方式
+<span class="kw">const</span> Cheng = <span class="kw">class</span> {
+  <span class="fn">constructor</span>() {
+    <span class="kw">const</span> Hello = [<span class="nu">${joinChunk(q1)}</span>];
+    <span class="kw">const</span> EveryOne = [<span class="nu">${joinChunk(q2)}</span>];
+    <span class="kw">const</span> WelcomeTo = [<span class="nu">${joinChunk(q3)}</span>];
+    <span class="kw">const</span> MineBlog = [<span class="nu">${joinChunk(q4)}</span>];
+    <span class="kw">const</span> AboutMe = JSON.parse(String.fromCharCode(...[...Hello, ...EveryOne, ...WelcomeTo, ...MineBlog]));
+    console.log(<span class="st">"🙋 Hello, this is me ↓"</span>, AboutMe);
+  }
+};
+<span class="kw">new</span> Cheng();
+<span class="cm">// Tip: About 页面也支持评论区留言哦~</span>`} /></pre> -->
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // 进入视口时给技能条注入目标宽度 (支持 swup)
+  const animateSkills = () => {
+    const fills = document.querySelectorAll<HTMLElement>(
+      ".vh-about-skill-fill",
+    );
+    const io = new IntersectionObserver(
+      (list) => {
+        for (const entry of list) {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            const v = el.getAttribute("data-value") || "0";
+            el.style.width = v + "%";
+            io.unobserve(el);
+          }
+        }
+      },
+      { threshold: 0.2 },
+    );
+    fills.forEach((el) => io.observe(el));
+  };
+  animateSkills();
+  // swup 无刷新重入后重新触发
+  window.addEventListener("swup:contentReplaced", animateSkills);
+</script>
