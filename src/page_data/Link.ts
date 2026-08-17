@@ -81,6 +81,18 @@ export default {
       'link': 'https://detached.online/',
       'avatar': 'https://detached.online/icon-512.png',
       'descr': '独立开发者的技术、工具与生活博客'
+    },
+    {
+      'name': '他说',
+      'link': 'https://090909.top',
+      'avatar': 'https://090909.top/assets/images/logo.ico',
+      'descr': '梁栋烨的博客网站。'
+    },
+    {
+      'name': '王一君Mew',
+      'link': 'https://wyjmew.cn/',
+      'avatar': 'https://wyjmew.cn/app.png',
+      'descr': '王一君的个人博客。'
     }
   ]
 }
