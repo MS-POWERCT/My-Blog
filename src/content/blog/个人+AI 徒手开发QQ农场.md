@@ -4,7 +4,7 @@ categories: Code
 tags:
   - 农场
   - 小游戏
-id: game-farm
+id: ai-qq-farm-game
 cover: "/assets/images/banner/c89cf634867c07e2.webp"
 date: 2026-07-18 20:45
 ---

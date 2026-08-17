@@ -6,8 +6,8 @@ export default {
     {
       "name": "陈义程博客",
       "link": "https://www.chenyicheng.cn/",
-      "avatar": "https://wp-cdn.4ce.cn/v2/U0pG3Xt.png",
-      "descr": "有人辞官归故里 有人星夜赶科场."
+      "avatar": "https://chenyicheng.cn/assets/images/avatar1.png",
+      "descr": "独行于比特荒野 不是造物主便是幽灵."
     },
     {
       "name": "韩小韩博客",
@@ -51,6 +51,23 @@ export default {
       "avatar": "https://halo-oss-qiniu.antx.cc/files/2025/07/30/uyeowvrywqlkttlj.png",
       "descr": "别怕路远，走一步就有一步的光亮。",
       "rss": "https://blog.antx.cc/rss.xml"
+    },
+    {
+      "name": "胡积的宇宙船",
+      "link": "https://blog.huanment.top",
+      "avatar": "https://blog.huanment.top/images/avatar.avif",
+      "descr": "莫笑吾辈好远骛，跬步平川马蹄疾。",
+    },
+    {
+      "name": "Rain blog",
+      "link": "https://rainzt.cn/",
+      "avatar": "https://www.image2url.com/r2/default/images/1785147855459-3b101453-91d4-4326-97db-a5230c837698.jpg",
+      "descr": "物物而不物，念念而不念于念"
+    },{
+      'name': '博友圈',
+      'link': 'https://www.boyouquan.com/home',
+      'avatar': 'https://www.boyouquan.com/assets/images/sites/logo/logo-blue.svg',
+      'descr': '博友圈是博客人的专属朋友圈！我们深信每个博客背后都是一个独特的灵魂，让我们跨越山海彼此相连，一起用文字打败时间！'
     }
   ]
 }

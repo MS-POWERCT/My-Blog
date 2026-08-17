@@ -1,5 +1,9 @@
 import { getCollection } from "astro:content";
-const posts = (await getCollection("blog")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// 全站统一出口：自动过滤 hide 文章，按时间倒序
+const allPosts = (await getCollection("blog")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const posts = allPosts.filter((i: any) => !i.data.hide);
+
 // 获取文章分类
 const getCategories = () => {
   const categoriesList = posts.reduce((acc: any, i: any) => {
@@ -17,8 +21,9 @@ const getCountInfo = () => {
 // 获取文章标签
 const getTags = () => {
   const tagList = posts.reduce((acc: any, i: any) => {
-    (i.data.tags || []).forEach((tag: string) => {
-      acc[tag] = (acc[tag] || 0) + 1;
+    (i.data.tags || []).forEach((tag: string | number) => {
+      const key = String(tag);
+      acc[key] = (acc[key] || 0) + 1;
     });
     return acc;
   }, {});
@@ -33,11 +38,9 @@ const getRecommendArticles = () => {
 
 // 获取上一篇下一篇文章
 const getPrevNextPosts = (id: string) => {
-  const noHidePosts = posts.filter(i => !i.data.hide);
-  const index = noHidePosts.findIndex(i => i.data.id === id);
+  const index = posts.findIndex(i => i.data.id === id);
   const none = { title: '没有啦~', id: '#' };
-  return { prev: noHidePosts[index - 1] ? noHidePosts[index - 1].data : none, next: noHidePosts[index + 1] ? noHidePosts[index + 1].data : none }
+  return { prev: posts[index - 1] ? posts[index - 1].data : none, next: posts[index + 1] ? posts[index + 1].data : none }
 }
-
 
 export { getCategories, getTags, getRecommendArticles, getCountInfo, getPrevNextPosts };

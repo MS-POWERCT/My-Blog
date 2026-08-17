@@ -5,7 +5,7 @@ tags:
   - 小游戏
   - 沉迷
   - 游戏设计
-id: little-game
+id: game-retrospect
 cover: "/assets/images/banner/e236278e3b5a265e.webp"
 date: 2026-07-16 21:37
 ---

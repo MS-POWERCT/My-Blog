@@ -12,12 +12,11 @@ export default {
   // 作者头像
   Avatar: '/assets/images/avatar1.png',
   // 网站座右铭
-  Motto: '有人辞官归故里 有人星夜赶科场.',
+  Motto: '独行于比特荒野 不是造物主便是幽灵.',
   // Cover 网站缩略图
   Cover: '/assets/images/banner/072c12ec85d2d3b5.webp',
-  // Cover: 'https://wp-cdn.4ce.cn/v2/Y7Sh4NW.jpeg',
   // 网站侧边栏公告 (不填写即不开启)
-  Tips: '<p>欢迎光临我的博客 🎉</p><p>这里会分享我的日常和学习中的收集、整理及总结，希望能对你有所帮助:) 💖</p>',
+  Tips: '<p>欢迎光临我的博客 🎉</p><p>这里会分享我的日常和学习中的收集、整理及总结，希望能对你有所帮助:) 💖</p><p><img src="/assets/images/tips.gif" alt="Mascot"></p>',
   // 首页打字机文案列表
   TypeWriteList: [
     '青青子衿,悠悠我心.',
@@ -57,7 +56,7 @@ export default {
     // { text: '圈子', link: '/friends', icon: 'Nav_rss' },
     { text: '动态', link: '/talking', icon: 'Nav_talking' },
     { text: '昔日', link: '/archives', icon: 'Nav_archives' },
-    // { text: '留言', link: '/message', icon: 'Nav_message' },
+    { text: '留言', link: '/message', icon: 'Nav_message' },
     { text: '关于', link: '/about', icon: 'Nav_about' },
     { text: '自律青年', link: 'https://m.powerct.cn/', target: true, icon: 'Nav_link' },
     { text: '文字农场', link: 'https://farm.powerct.cn/', target: true, icon: 'Nav_link' },
@@ -77,7 +76,6 @@ export default {
     { text: '小红书', link: 'https://www.xiaohongshu.com/user/profile/58647dd96a6a697b89d43c99', icon: 'WebSite_xiaohongshu' },
     // 主页链接打开方式：https://www.douyin.com/user/{你的抖音sec_uid}
     { text: '抖音', link: 'https://v.douyin.com/2hgO8v0EzzE', icon: 'WebSite_douyin' },
-    // { text: '骤雨重山图床', link: 'https://wp-cdn.4ce.cn', icon: 'WebSite_img' },
   ],  
   // 侧边栏展示
   AsideShow: {
@@ -118,8 +116,12 @@ export default {
   Comment: {
     // Twikoo 评论
     Twikoo: {
-      enable: false,
-      envId: ''
+      enable: true,
+      envId: 'https://powerctblogtwikoo.netlify.app/.netlify/functions/twikoo'
+      //这样配置还可以优化，目前的问题就是这样配置太长，而且有时候会抽风503，可以问问ai如何优化一下，暂时不动也没事
+      // 文章底部能正常评论、能发图片（图片上传如果报错，可能需要 Netlify 的 MongoDB 配置内存限制或配单独图床）
+      //  管理后台：访问 https://powerctblogtwikoo.netlify.app/ → 注册第一个账号（自动是管理员）→ 能看到评论列表、能通过审核、能设置反垃圾和邮件通知
+      //  邮件通知：如果有配 Twikoo 后台的 SMTP，自己发一条测试评论，看能不能收到邮件提醒
     },
     // Waline 评论
     Waline: {

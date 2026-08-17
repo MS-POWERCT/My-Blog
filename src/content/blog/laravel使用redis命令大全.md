@@ -4,7 +4,7 @@ categories: Code
 tags:
   - laravel
   - redis
-id: laravel-redis
+id: laravel-redis-notes
 cover: "/assets/images/banner/f37068307476b8b1.webp"
 date: 2026-07-17 22:51
 ---

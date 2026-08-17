@@ -5,7 +5,7 @@ tags:
   - 日常
   - 打卡
   - 标记
-id: habits-mark
+id: ai-habit-tracker-app
 cover: "/assets/images/banner/536981d29e42bd29.webp"
 date: 2026-07-18 22:45
 ---

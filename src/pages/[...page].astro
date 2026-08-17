@@ -4,17 +4,17 @@ import type { GetStaticPathsOptions } from "astro";
 import setSearchJson from "@/utils/vhSearch";
 import moveTopToFirst from "@/utils/moveTopToFirst";
 export async function getStaticPaths(options: GetStaticPathsOptions) {
-	const { paginate } = options;
-	const posts = (await getCollection("blog")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-	// 置顶文章功能
-	moveTopToFirst(posts);
-	// 生成 Search JSON 文件
-	await setSearchJson(posts);
-	// 隐藏的文章不显示
-	return paginate(
-		posts.filter(i => !i.data.hide),
-		{ pageSize: 15 }
-	);
+  const { paginate } = options;
+  const allPosts = (await getCollection("blog")).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  );
+  // 隐藏的文章不参与任何展示、搜索和排序
+  const posts = allPosts.filter((i) => !i.data.hide);
+  // 置顶文章功能
+  moveTopToFirst(posts);
+  // 生成 Search JSON 文件（不包含 hide 的文章）
+  await setSearchJson(posts);
+  return paginate(posts, { pageSize: 15 });
 }
 
 const { page } = Astro.props;
@@ -31,13 +31,17 @@ import Pagination from "@/components/Pagination/Pagination.astro";
 const currentPage = page_data.url.current.replace("/", "");
 ---
 
-<Layout title={currentPage ? `第${currentPage}页文章` : ""} description={Description} Home={true}>
-	<section class="article-list-main">
-		<section class="article-list">
-			<!-- 文章列表 -->
-			{data.map((post, index) => <ArticleCard post={post} index={index} />)}
-			<!-- 分页 -->
-		</section>
-		<Pagination data={page_data.url} />
-	</section>
+<Layout
+  title={currentPage ? `第${currentPage}页文章` : ""}
+  description={Description}
+  Home={true}
+>
+  <section class="article-list-main">
+    <section class="article-list">
+      <!-- 文章列表 -->
+      {data.map((post, index) => <ArticleCard post={post} index={index} />)}
+      <!-- 分页 -->
+    </section>
+    <Pagination data={page_data.url} />
+  </section>
 </Layout>

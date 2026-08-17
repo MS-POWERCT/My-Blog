@@ -15,6 +15,6 @@ type: "links"
 ```yaml
 name: 陈义程博客
 link: https://www.chenyicheng.cn/
-avatar: https://wp-cdn.4ce.cn/v2/U0pG3Xt.png
-desc: 有人辞官归故里 有人星夜赶科场.
+avatar: https://chenyicheng.cn/assets/images/avatar1.png
+desc: 独行于比特荒野 不是造物主便是幽灵.
 ```

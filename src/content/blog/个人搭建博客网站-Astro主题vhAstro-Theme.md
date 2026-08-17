@@ -3,7 +3,7 @@ title: 个人搭建博客网站-Astro主题vhAstro-Theme
 categories: Code
 tags:
   - 技术
-id: astro-theme
+id: astro-blog-vh-theme
 cover: /assets/images/banner/article/astro-blog-cover-3.jpg
 date: 2026-08-06 12:57
 ---

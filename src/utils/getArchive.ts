@@ -1,6 +1,14 @@
 
 import { getCollection } from "astro:content";
 
+// 获取所有文章（已按时间倒序，自动过滤 hide=true 的软隐藏文章）
+const getAllPosts = async () => {
+  const posts = await getCollection("blog");
+  return posts
+    .filter((i: any) => !i.data.hide)
+    .sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf());
+};
+
 // 格式化文章列表
 const fmtArticleList = (articleList: any) => {
   // 按年份分类
@@ -17,22 +25,21 @@ const fmtArticleList = (articleList: any) => {
 
 // 获取分类下的文章列表
 const getCategoriesList = async (categories: string) => {
-  const posts = await getCollection("blog");
-  const articleList = posts.filter((i: any) => i.data.categories == categories).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());;
+  const posts = await getAllPosts();
+  const articleList = posts.filter((i: any) => i.data.categories == categories);
   return fmtArticleList(articleList);
 }
 
 // 获取标签下的文章列表
 const getTagsList = async (tags: string) => {
-  const posts = await getCollection("blog");
-  const articleList = posts.filter((i: any) => (i.data.tags || []).map((_i: any) => (String(_i))).includes(tags)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  const posts = await getAllPosts();
+  const articleList = posts.filter((i: any) => (i.data.tags || []).map((_i: any) => (String(_i))).includes(tags));
   return fmtArticleList(articleList);
 }
 
 // 获取归档列表
 const getArchiveList = async () => {
-  const posts = await getCollection("blog");
-  const articleList = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());;
+  const articleList = await getAllPosts();
   return fmtArticleList(articleList);
 }
 

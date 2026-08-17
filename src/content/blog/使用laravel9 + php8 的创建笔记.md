@@ -5,7 +5,7 @@ tags:
   - laravel
   - php
   - 开发环境
-id: laravel9_php8
+id: laravel9-php8-notes
 cover: /assets/images/banner/article/laravel9-php8-banner.jpg
 date: 2026-07-24 11:20
 ---
