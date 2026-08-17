@@ -63,11 +63,24 @@ export default {
       "link": "https://rainzt.cn/",
       "avatar": "https://www.image2url.com/r2/default/images/1785147855459-3b101453-91d4-4326-97db-a5230c837698.jpg",
       "descr": "物物而不物，念念而不念于念"
-    },{
+    },
+    {
       'name': '博友圈',
       'link': 'https://www.boyouquan.com/home',
       'avatar': 'https://www.boyouquan.com/assets/images/sites/logo/logo-blue.svg',
       'descr': '博友圈是博客人的专属朋友圈！我们深信每个博客背后都是一个独特的灵魂，让我们跨越山海彼此相连，一起用文字打败时间！'
+    },
+    {
+      'name': '天渺studio',
+      'link': 'https://tianmiao.site',
+      'avatar': 'https://tianmiao.site/logo.png',
+      'descr': '天渺studio的小站&日志记录'
+    },
+    {
+      'name': 'Detached',
+      'link': 'https://detached.online/',
+      'avatar': 'https://detached.online/icon-512.png',
+      'descr': '独立开发者的技术、工具与生活博客'
     }
   ]
 }
