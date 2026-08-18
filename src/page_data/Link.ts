@@ -34,12 +34,6 @@ export default {
       "descr": "特别推荐给热爱摄影与打卡的旅人."
     },
     {
-      "name": "天渺studio",
-      "link": "https://tianmiao.site",
-      "avatar": "https://s21.ax1x.com/2024/12/22/pAXtJat.jpg",
-      "descr": "天渺studio的小站&日志记录"
-    },
-    {
       "name": "冷月笙寒的小窝",
       "link": "https://lygalaxy.cn/",
       "avatar": "https://lygalaxy.cn/uploads/20260128_200240_6979fae094c7b.jpg",
@@ -93,6 +87,12 @@ export default {
       'link': 'https://wyjmew.cn/',
       'avatar': 'https://wyjmew.cn/app.png',
       'descr': '王一君的个人博客。'
+    },
+    {
+      'name': '朝朝听雨',
+      'link': 'https://rainzt.cn/',
+      'avatar': 'https://rainzt.cn/zzty.png',
+      'descr': '物物而不物，念念而不念于念'
     }
   ]
 }
