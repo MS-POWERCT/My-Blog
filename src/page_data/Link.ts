@@ -93,6 +93,13 @@ export default {
       'link': 'https://rainzt.cn/',
       'avatar': 'https://rainzt.cn/zzty.png',
       'descr': '物物而不物，念念而不念于念'
+    },
+    {
+      'name': '默小班',
+      'link': 'https://www.memxb.top/',
+      'avatar': 'https://wmimg.com/i/780/2025/07/68677fe53c2d1.png',
+      'descr': '一个准高生的小站点，内住着一位鸽王。',
+      'rss': 'https://www.memxb.top/feed'
     }
   ]
 }
