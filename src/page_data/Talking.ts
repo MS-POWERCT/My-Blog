@@ -5,6 +5,11 @@ export default {
   // 注意：图片请用 vh-img-flex 类包裹
   data: [
     {
+      'date': '2026-08-23 22:30',
+      'tags': ['日常', '婚礼'],
+      'content': '今天去参加了一场婚礼，新郎新娘都是我初三同班同学，从相识到现在，两个人携手走过了好多年，终于在今天步入了婚姻的殿堂。<br/>同班来的人不多，就我和另外一位，还有几个同校时认识的朋友，其余的大多是他高中甚至更晚阶段结识的人。忽然就觉得，人生大抵如此——大多数人都只是生命中的过客，彼此陪伴走过一程，然后各自散去。<br/>大家都许久未见，坐在一起反倒有些生疏，不知道该聊些什么。我自己也已经当爸爸了，大半时间都在旁边照看小孩。<p class="vh-img-flex"><img src="/assets/images/talking/xsy_yql/tglns-4ly6y.jpg"><img src="/assets/images/talking/xsy_yql/tqr3h-tnysf.jpg"><img src="/assets/images/talking/xsy_yql/txlze-66dej.jpg"><img src="/assets/images/talking/xsy_yql/tf1gl-rbbmv.jpg"></p>'
+    },
+    {
       'date': '2026-08-20 22:30',
       'tags': ['日常', '卤牛腱子'],
       'content': '上次的牛腱子吃的很开心，很成功所以我决定再做一份，这次买的更多2.5斤，同样的做法同样的配料，味道没什么区别。<br/>但是还是增加了一些经验，原来一头牛有12个牛腱子，又分为不同的名字比如：金钱腱，三花腱，肉腱等，不同的腱子肉做不同的食物会好吃很多<br/>所以我下次还要再使用最好的腱子肉做一次'

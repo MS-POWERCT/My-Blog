@@ -68,14 +68,16 @@ export default {
     { text: 'Github', link: 'https://github.com/MS-POWERCT', icon: 'WebSite_github' },
     // https://www.zhihu.com/people/chen-yi-cheng-73-60
     { text: '知乎', link: 'https://www.zhihu.com/people/chen-yi-cheng-73-60', icon: 'WebSite_zhihu' },
-    // { text: 'QQ', link: 'https://wpa.qq.com/msgrd?v=3&uin=2446762079&site=qq&menu=yes', icon: 'brand-qq' },
-    // { text: '微信', link: 'https://weixin.qq.com/', icon: 'brand-wechat' },
-    // { text: '每日热榜', link: 'https://hot.vvhan.com', icon: 'WebSite_hot' },
+    // copyText: 点击图标复制对应内容到剪贴板（不跳转），适合微信号 / QQ号 等纯文本
+      // { text: '每日热榜', link: 'https://hot.vvhan.com', icon: 'WebSite_hot' },
     // { text: 'HanAnalytics', link: 'https://analytics.vvhan.com', icon: 'WebSite_analytics' },
     // 主页链接打开方式：https://www.xiaohongshu.com/user/profile/{你的小红书ID}
-    { text: '小红书', link: 'https://www.xiaohongshu.com/user/profile/58647dd96a6a697b89d43c99', icon: 'WebSite_xiaohongshu' },
+    // { text: '小红书', link: 'https://www.xiaohongshu.com/user/profile/58647dd96a6a697b89d43c99', icon: 'WebSite_xiaohongshu' },
     // 主页链接打开方式：https://www.douyin.com/user/{你的抖音sec_uid}
     { text: '抖音', link: 'https://v.douyin.com/2hgO8v0EzzE', icon: 'WebSite_douyin' },
+    { text: '微信', icon: 'brand-wechat', copyText: 'Valar_Morghulis426' },
+    { text: 'QQ', icon: 'brand-qq', copyText: '2446762079' },
+ 
   ],  
   // 侧边栏展示
   AsideShow: {

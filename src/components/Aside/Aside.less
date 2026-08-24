@@ -95,8 +95,12 @@ aside.vh-aside {
           border: solid 1px #333;
           background-color: var(--vh-white-color);
           border-radius: 0.38rem;
-          overflow: hidden;
+          overflow: visible;
           z-index: 1;
+          padding: 0;
+          cursor: pointer;
+          color: inherit;
+          font: inherit;
 
           &:hover {
             color: var(--vh-white-color);
@@ -114,6 +118,7 @@ aside.vh-aside {
             bottom: 0;
             width: 100%;
             height: 0;
+            border-radius: inherit;
             background-color: var(--vh-main-color-88);
             transition: height 0.18s ease-in-out;
             z-index: -1;
@@ -124,6 +129,53 @@ aside.vh-aside {
             height: 1.18rem;
             object-fit: contain;
             stroke-width: 3px;
+          }
+
+           // 复制专用：toast 浮标
+          &.copy-item {
+            overflow: visible;
+
+            &> .copy-toast {
+              position: absolute;
+              left: 50%;
+              bottom: calc(100% + 0.4rem);
+              transform: translateX(-50%) translateY(0.2rem);
+              padding: 0.15rem 0.35rem;
+              font-size: 0.6rem;
+              line-height: 1.4;
+              white-space: nowrap;
+              color: var(--vh-white-color);
+              background-color: var(--vh-success);
+              border-radius: 0.22rem;
+              box-shadow: var(--vh-box-shadow);
+              opacity: 0;
+              pointer-events: none;
+              transition: opacity 0.18s ease-in-out, transform 0.18s ease-in-out;
+
+              &::after {
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 100%;
+                transform: translateX(-50%);
+                border: 0.2rem solid transparent;
+                border-top-color: var(--vh-success);
+              }
+            }
+
+            &.copied {
+              &::after {
+                height: 100%;
+                background-color: var(--vh-success);
+              }
+              color: var(--vh-white-color);
+              border-color: var(--vh-success);
+
+              &> .copy-toast {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+              }
+            }
           }
         }
       }

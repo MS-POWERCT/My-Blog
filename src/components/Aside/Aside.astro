@@ -44,17 +44,37 @@ import "./Aside.less";
         <span class="vh-aside-auther">{Author}</span>
         <p class="vh-aside-motto">{Motto}</p>
         <section class="vh-aside-links">
-          {WebSites.map((item) => (
-            <a
-              class="vh-aside-links-item"
-              href={item.link}
-              title={item.text}
-              target="_blank"
-              rel="noopener nofollow"
-            >
-              <Svg src={item.icon} />
-            </a>
-          ))}
+          {WebSites.map((item) => {
+            const titleText = item.copyText
+              ? `${item.text}（点击复制 ${item.copyText}）`
+              : item.text;
+            if (item.copyText) {
+              return (
+                <button
+                  class="vh-aside-links-item copy-item"
+                  type="button"
+                  title={titleText}
+                  data-copy-text={item.copyText}
+                >
+                  <Svg src={item.icon} />
+                  <span class="copy-toast" aria-hidden="true">
+                    已复制
+                  </span>
+                </button>
+              );
+            }
+            return (
+              <a
+                class="vh-aside-links-item"
+                href={item.link}
+                title={titleText}
+                target="_blank"
+                rel="noopener nofollow"
+              >
+                <Svg src={item.icon} />
+              </a>
+            );
+          })}
         </section>
         <section class="vh-aside-info">
           <div class="art-item count">
@@ -186,3 +206,38 @@ import "./Aside.less";
     }
   </section>
 </aside>
+
+<script>
+  document
+    .querySelectorAll<HTMLButtonElement>("button.copy-item[data-copy-text]")
+    .forEach((btn) => {
+      let timer: number | null = null;
+      btn.addEventListener("click", async () => {
+        const text = btn.dataset.copyText;
+        if (!text) return;
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch (e) {
+          // 兼容非 HTTPS / 老浏览器的兜底
+          const area = document.createElement("textarea");
+          area.value = text;
+          area.style.position = "fixed";
+          area.style.opacity = "0";
+          document.body.appendChild(area);
+          area.select();
+          try {
+            document.execCommand("copy");
+          } catch (_) {
+            /* ignore */
+          }
+          document.body.removeChild(area);
+        }
+        btn.classList.add("copied");
+        if (timer) window.clearTimeout(timer);
+        timer = window.setTimeout(() => {
+          btn.classList.remove("copied");
+          timer = null;
+        }, 1400);
+      });
+    });
+</script>
