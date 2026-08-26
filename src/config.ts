@@ -58,8 +58,8 @@ export default {
     { text: '昔日', link: '/archives', icon: 'Nav_archives' },
     { text: '留言', link: '/message', icon: 'Nav_message' },
     { text: '关于', link: '/about', icon: 'Nav_about' },
-    { text: '自律青年', link: 'https://m.powerct.cn/', target: true, icon: 'Nav_link' },
-    { text: '文字农场', link: 'https://farm.powerct.cn/', target: true, icon: 'Nav_link' },
+    { text: '自律青年', link: 'https://m.powerct.cn/#/profile', target: true, icon: 'Nav_link' },
+    { text: '文字农场', link: 'https://farm.powerct.cn', target: true, icon: 'Nav_link' },
   ],
   // 侧边栏个人网站
   WebSites: [
