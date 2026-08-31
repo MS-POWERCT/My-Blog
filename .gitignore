@@ -21,6 +21,9 @@ pnpm-debug.log*
 .DS_Store
 test/
 /public/vh-search.json
+# 大体积无损音频不进仓库，动态页请用 mp3
+public/assets/music/*.wav
+public/assets/music/*.dff
 # Tencent Cloud EdgeOne
 .env
 .edgeone

@@ -59,6 +59,8 @@ const indexInit = async (only: boolean = true) => {
   codeInit();
   // 图片懒加载初始化
   vhLzImgInit();
+  // 动态说说先渲染，视频 / 音乐节点才会出现在页面上
+  await initTalking();
   // 初始化 LivePhoto
   livePhotoInit();
   // 文章视频播放器初始化
@@ -69,8 +71,6 @@ const indexInit = async (only: boolean = true) => {
   initLinks();
   // 朋友圈 RSS 初始化
   initFriends();
-  // 动态说说初始化
-  initTalking();
   // Google 广告
   GoogleAdInit();
   // 谷歌 SEO 推送

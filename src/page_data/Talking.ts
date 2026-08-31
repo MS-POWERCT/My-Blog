@@ -1,14 +1,4 @@
-/** 多行正文：换行会变成 <br/>；图片单独放数组，不必塞进同一行 */
-function talk(raw: string, images: string[] = []) {
-  const lines = raw.replace(/^\n/, '').replace(/\n\s*$/, '').split('\n')
-  const indents = lines.filter((l) => l.trim()).map((l) => l.match(/^[ \t]*/)?.[0].length ?? 0)
-  const min = indents.length ? Math.min(...indents) : 0
-  const body = lines.map((l) => l.slice(min)).join('<br/>')
-  const gallery = images.length
-    ? `<p class="vh-img-flex">${images.map((src) => `<img src="${src}">`).join('')}</p>`
-    : ''
-  return body + gallery
-}
+import { talk } from '@/utils/talk'
 
 export default {
   // API 接口请求优先，数据格式保持和 data 一致
@@ -16,6 +6,36 @@ export default {
   // api 为空则使用 data 静态数据
   // 注意：图片请用 vh-img-flex 类包裹（talk 的第二参数会自动生成）
   data: [
+    {
+      date: '2026-09-01 01:12',
+      tags: ['日常', '音乐'],
+      content: talk(`
+        再来一首周杰伦的《以父之名》。
+        。
+      `, {
+        musics: [{
+          url: '/assets/music/周杰伦-以父之名.mp3',
+          name: '以父之名',
+          artist: '周杰伦',
+          cover: '/assets/music/avatars/周杰伦.jpg',
+        }],
+      })
+    },
+    {
+      date: '2026-09-01 00:35',
+      tags: ['日常', '音乐'],
+      content: talk(`
+        来一首云朵的《我的楼兰》。
+        。
+        `, {
+        musics: [{
+          url: '/assets/music/云朵-我的楼兰.mp3',
+          name: '我的楼兰',
+          artist: '云朵',
+          cover: '/assets/music/avatars/云朵.jpg',
+        }],
+      })
+    },
     {
       date: '2026-08-26 20:30',
       tags: ['日常', '开发'],
