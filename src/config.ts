@@ -131,11 +131,15 @@ export default {
       serverURL: ''
     }
   },
-  // Han Analytics 统计（https://github.com/uxiaohan/HanAnalytics）
+  // Han Analytics 统计（公共实例容易卡住，已关闭）
   HanAnalytics: { 
     enable: false, 
     server: 'https://analytics.vvhan.com', 
     siteId: 'Hello-HanHexoBlog' 
+  },
+  // 页脚访问量（不蒜子：只显示次数，没有后台）
+  Busuanzi: {
+    enable: true
   },
   // Google 广告
   GoogleAds: {
