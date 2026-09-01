@@ -24,6 +24,9 @@ test/
 # 大体积无损音频不进仓库，动态页请用 mp3
 public/assets/music/*.wav
 public/assets/music/*.dff
+public/assets/music/*.dsf
+public/assets/music/*.ape
+public/assets/music/*.APE
 # Tencent Cloud EdgeOne
 .env
 .edgeone

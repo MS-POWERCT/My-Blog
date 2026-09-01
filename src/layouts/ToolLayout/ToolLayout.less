@@ -209,6 +209,352 @@
           }
         }
 
+        &.music-main {
+          padding: 1.25rem;
+          background-color: var(--vh-white-color);
+          box-shadow: var(--vh-box-shadow);
+          overflow: hidden;
+
+          .vh-music-page {
+            width: 100%;
+          }
+
+          .vh-music-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+
+            .vh-music-filter {
+              box-sizing: border-box;
+              padding: 0.28rem 0.78rem;
+              height: 1.78rem;
+              border: 1px solid var(--vh-main-color);
+              border-radius: var(--vh-main-radius);
+              background: var(--vh-white-color);
+              color: var(--vh-main-color);
+              font-size: 0.78rem;
+              cursor: pointer;
+              transition: all 0.18s ease;
+
+              &:hover,
+              &.active {
+                background: var(--vh-main-color);
+                color: #fff;
+              }
+            }
+          }
+
+          .vh-music-stage {
+            position: relative;
+            box-sizing: border-box;
+            margin-bottom: 1rem;
+            padding: 1.4rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.6rem;
+            border-radius: 1rem;
+            overflow: hidden;
+            background:
+              radial-gradient(circle at 18% 40%, color-mix(in srgb, var(--vh-main-color) 42%, transparent), transparent 42%),
+              linear-gradient(135deg, #12151c 0%, #1b2430 52%, #0f141b 100%);
+            color: #fff;
+
+            &::before {
+              content: '';
+              position: absolute;
+              inset: -40%;
+              background: conic-gradient(from 180deg, transparent, color-mix(in srgb, var(--vh-main-color) 28%, transparent), transparent 40%);
+              opacity: 0.45;
+              animation: vhMusicGlow 12s linear infinite;
+              pointer-events: none;
+            }
+
+            &.is-playing {
+              .vh-music-disc {
+                animation: vhMusicSpin 18s linear infinite;
+              }
+
+              .vh-music-orbit,
+              .vh-music-orbit-2 {
+                animation-play-state: running;
+              }
+
+              .vh-music-eq i {
+                animation-play-state: running;
+              }
+            }
+          }
+
+          .vh-music-visual {
+            position: relative;
+            flex-shrink: 0;
+            width: 11.5rem;
+            height: 11.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+          }
+
+          .vh-music-orbit,
+          .vh-music-orbit-2 {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px dashed color-mix(in srgb, var(--vh-main-color) 70%, #fff);
+            animation: vhMusicSpin 10s linear infinite;
+            animation-play-state: paused;
+            opacity: 0.55;
+          }
+
+          .vh-music-orbit-2 {
+            inset: -0.7rem;
+            animation-duration: 16s;
+            animation-direction: reverse;
+            opacity: 0.3;
+          }
+
+          .vh-music-eq {
+            position: absolute;
+            bottom: -0.15rem;
+            display: flex;
+            align-items: flex-end;
+            gap: 0.18rem;
+            height: 1.1rem;
+            z-index: 2;
+
+            i {
+              display: block;
+              width: 0.18rem;
+              height: 0.3rem;
+              border-radius: 99px;
+              background: var(--vh-main-color);
+              animation: vhMusicEq 0.9s ease-in-out infinite alternate;
+              animation-play-state: paused;
+
+              &:nth-child(2) { animation-delay: 0.12s; }
+              &:nth-child(3) { animation-delay: 0.24s; height: 0.55rem; }
+              &:nth-child(4) { animation-delay: 0.08s; }
+              &:nth-child(5) { animation-delay: 0.32s; }
+            }
+          }
+
+          .vh-music-disc {
+            position: relative;
+            width: 8.6rem;
+            height: 8.6rem;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow:
+              0 0 0 8px #111,
+              0 0 0 10px color-mix(in srgb, var(--vh-main-color) 80%, #fff),
+              0 12px 32px rgba(0, 0, 0, 0.45);
+            animation: vhMusicSpin 18s linear infinite;
+            animation-play-state: paused;
+
+            &::after {
+              content: '';
+              position: absolute;
+              inset: 42%;
+              border-radius: 50%;
+              background: #111;
+              border: 3px solid var(--vh-main-color);
+              z-index: 1;
+            }
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              aspect-ratio: 1;
+              cursor: default;
+            }
+          }
+
+          .vh-music-disc-toggle {
+            position: absolute;
+            width: 8.6rem;
+            height: 8.6rem;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.42);
+            cursor: pointer;
+            z-index: 3;
+            transition: opacity 0.2s ease;
+
+            &::before {
+              content: '';
+              position: absolute;
+              left: 54%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+              border-style: solid;
+              border-width: 0.7rem 0 0.7rem 1.15rem;
+              border-color: transparent transparent transparent #fff;
+              opacity: 0.92;
+            }
+          }
+
+          .vh-music-stage.is-playing .vh-music-disc-toggle {
+            opacity: 0;
+
+            &::before {
+              left: 50%;
+              width: 0.95rem;
+              height: 1.05rem;
+              border: 0;
+              background: transparent;
+              box-shadow: inset 0.28rem 0 0 #fff, inset -0.28rem 0 0 #fff;
+            }
+
+            &:hover,
+            &:focus-visible {
+              opacity: 1;
+            }
+          }
+
+          .vh-music-meta {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            min-width: 0;
+          }
+
+          .vh-music-title {
+            margin: 0;
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+          }
+
+          .vh-music-artist {
+            margin: 0.35rem 0 0.8rem;
+            font-size: 0.88rem;
+            opacity: 0.72;
+          }
+
+          .vh-music-controls {
+            margin-top: 0.8rem;
+          }
+
+          .vh-music-bar {
+            height: 6px;
+            border-radius: 99px;
+            background: rgba(255, 255, 255, 0.18);
+            cursor: pointer;
+            overflow: hidden;
+
+            .vh-music-played {
+              display: block;
+              width: 0;
+              height: 100%;
+              border-radius: 99px;
+              background: linear-gradient(90deg, var(--vh-main-color), #fff);
+            }
+          }
+
+          .vh-music-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+
+            button,
+            label {
+              border: 0;
+              border-radius: 999px;
+              background: rgba(255, 255, 255, 0.12);
+              color: #fff;
+              font-size: 0.75rem;
+              cursor: pointer;
+            }
+
+            button {
+              padding: 0.32rem 0.72rem;
+            }
+
+            .vh-music-play {
+              background: var(--vh-main-color);
+            }
+          }
+
+          .vh-music-time {
+            font-size: 0.72rem;
+            opacity: 0.8;
+          }
+
+          .vh-music-vol-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.22rem 0.55rem;
+
+            input {
+              width: 5.5rem;
+              accent-color: var(--vh-main-color);
+            }
+          }
+
+          .vh-music-lrc-box {
+            .aplayer-lrc {
+              position: relative !important;
+              margin: 0 !important;
+              height: 8.6rem !important;
+              mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+
+              &:after,
+              &:before {
+                display: none;
+              }
+
+              p {
+                color: rgba(255, 255, 255, 0.45) !important;
+                font-size: 0.92rem !important;
+                line-height: 1.9rem !important;
+              }
+
+              .aplayer-lrc-current {
+                color: #fff !important;
+                font-size: 1.05rem !important;
+                text-shadow: 0 0 16px color-mix(in srgb, var(--vh-main-color) 80%, transparent);
+              }
+            }
+          }
+
+          .vh-music-player {
+            .aplayer {
+              margin: 0;
+              box-shadow: none;
+              background: transparent;
+
+              .aplayer-body {
+                display: none !important;
+                height: 0 !important;
+                overflow: hidden !important;
+              }
+
+              .aplayer-list {
+                margin: 0;
+              }
+            }
+          }
+        }
+
+        @keyframes vhMusicSpin {
+          to { transform: rotate(360deg); }
+        }
+
+        @keyframes vhMusicGlow {
+          to { transform: rotate(360deg); }
+        }
+
+        @keyframes vhMusicEq {
+          from { transform: scaleY(0.35); }
+          to { transform: scaleY(1.6); }
+        }
+
         // 动态
         &.talking-main {
           display: flex;
@@ -403,6 +749,14 @@
           // 友情链接
           &.links-main {
             grid-template-columns: repeat(2, 1fr);
+          }
+
+          // 音乐
+          &.music-main {
+            .vh-music-stage {
+              flex-direction: column;
+              text-align: center;
+            }
           }
 
           // 动态

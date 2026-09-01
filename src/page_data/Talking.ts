@@ -7,36 +7,6 @@ export default {
   // 注意：图片请用 vh-img-flex 类包裹（talk 的第二参数会自动生成）
   data: [
     {
-      date: '2026-09-01 01:12',
-      tags: ['日常', '音乐'],
-      content: talk(`
-        再来一首周杰伦的《以父之名》。
-        。
-      `, {
-        musics: [{
-          url: '/assets/music/周杰伦-以父之名.mp3',
-          name: '以父之名',
-          artist: '周杰伦',
-          cover: '/assets/music/avatars/周杰伦.jpg',
-        }],
-      })
-    },
-    {
-      date: '2026-09-01 00:35',
-      tags: ['日常', '音乐'],
-      content: talk(`
-        来一首云朵的《我的楼兰》。
-        。
-        `, {
-        musics: [{
-          url: '/assets/music/云朵-我的楼兰.mp3',
-          name: '我的楼兰',
-          artist: '云朵',
-          cover: '/assets/music/avatars/云朵.jpg',
-        }],
-      })
-    },
-    {
       date: '2026-08-26 20:30',
       tags: ['日常', '开发'],
       content: talk(`

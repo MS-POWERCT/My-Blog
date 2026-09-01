@@ -27,6 +27,7 @@ import initLinks from "@/scripts/Links";
 import initFriends from "@/scripts/Friends";
 // 动态说说初始化
 import initTalking from "@/scripts/Talking";
+import initMusicPage from "@/scripts/MusicPage";
 // 文章评论初始化
 import { checkComment, commentInit } from "@/scripts/Comment";
 // 移动端侧边栏初始化
@@ -61,6 +62,7 @@ const indexInit = async (only: boolean = true) => {
   vhLzImgInit();
   // 动态说说先渲染，视频 / 音乐节点才会出现在页面上
   await initTalking();
+  await initMusicPage(MusicList);
   // 初始化 LivePhoto
   livePhotoInit();
   // 文章视频播放器初始化
