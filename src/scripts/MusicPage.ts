@@ -37,10 +37,97 @@ const fmt = (sec = 0) => {
   return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 };
 
+/** APlayer 内置滚动步长固定 16px，与自定义行高不一致；移出 .aplayer 后还会吃到 display:none */
+const syncLrcScroll = (root: Element, lrc: any) => {
+  if (!lrc?.container) return;
+  const wrap = root.querySelector<HTMLElement>(".vh-music-lrc-box .aplayer-lrc");
+  const contents = lrc.container as HTMLElement;
+  const lines = contents.querySelectorAll<HTMLElement>("p");
+  if (!wrap || !lines.length) return;
+
+  const index = Math.min(Math.max(lrc.index ?? 0, 0), lines.length - 1);
+  const current = lines[index];
+  const lineTop = current.offsetTop;
+  const lineH = current.offsetHeight;
+  const targetY = wrap.clientHeight / 2 - (lineTop + lineH / 2);
+  const minY = wrap.clientHeight - contents.scrollHeight;
+  const y = Math.min(0, Math.max(minY, targetY));
+
+  contents.style.transform = `translateY(${y}px)`;
+  contents.style.webkitTransform = `translateY(${y}px)`;
+};
+
+const bindLrcScroll = (ap: any, root: Element) => {
+  const run = () =>
+    requestAnimationFrame(() => {
+      syncLrcScroll(root, ap.lrc);
+      requestAnimationFrame(() => syncLrcScroll(root, ap.lrc));
+    });
+  ap.audio.addEventListener("timeupdate", run);
+  ap.on("listswitch", () => {
+    run();
+    setTimeout(run, 120);
+    setTimeout(run, 500);
+  });
+  ap.on("lrcshow", run);
+};
+
+const renderPlaylist = (tracks: MusicTrack[], root: Element, activeIndex = 0) => {
+  const wrap = root.querySelector(".vh-music-playlist");
+  if (!wrap) return;
+
+  wrap.innerHTML = `
+    <header class="vh-music-pl-head">
+      <strong class="vh-music-pl-title">歌单</strong>
+      <span class="vh-music-pl-count">${tracks.length} 首</span>
+    </header>
+    <div class="vh-music-pl-scroll">
+      ${tracks
+        .map(
+          (track, index) => `
+        <button type="button" class="vh-music-pl-item${index === activeIndex ? " is-active" : ""}" data-index="${index}" aria-label="播放 ${track.name}">
+          <span class="vh-music-pl-cover">
+            <img src="${track.cover}" alt="" loading="lazy" />
+          </span>
+          <span class="vh-music-pl-info">
+            <strong class="vh-music-pl-name">${track.name}</strong>
+            <span class="vh-music-pl-artist">${track.artist}</span>
+          </span>
+          <span class="vh-music-pl-index">${String(index + 1).padStart(2, "0")}</span>
+          <span class="vh-music-pl-progress"><i></i></span>
+        </button>`,
+        )
+        .join("")}
+    </div>`;
+};
+
+const syncPlaylist = (ap: any, root: Element, playing = false) => {
+  const index = ap.list?.index ?? 0;
+  root.querySelectorAll<HTMLElement>(".vh-music-pl-item").forEach((item, i) => {
+    item.classList.toggle("is-active", i === index);
+    item.classList.toggle("is-playing", i === index && playing);
+  });
+  root.querySelector(".vh-music-pl-item.is-active")?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+};
+
+const bindPlaylist = (ap: any, tracks: MusicTrack[], root: Element) => {
+  renderPlaylist(tracks, root, ap.list?.index ?? 0);
+
+  root.querySelector(".vh-music-pl-scroll")?.addEventListener("click", (e) => {
+    const item = (e.target as HTMLElement).closest<HTMLElement>(".vh-music-pl-item");
+    if (!item) return;
+    const index = Number(item.dataset.index);
+    if (!Number.isFinite(index)) return;
+    if (index === ap.list.index) ap.toggle();
+    else {
+      ap.list.switch(index);
+      ap.play();
+    }
+  });
+};
+
 const bindStage = (ap: any, tracks: MusicTrack[], root: Element) => {
   const cover = root.querySelector<HTMLImageElement>(".vh-music-cover");
-  const title = root.querySelector(".vh-music-title");
-  const artist = root.querySelector(".vh-music-artist");
   const stage = root.querySelector(".vh-music-stage");
   const lrcBox = root.querySelector(".vh-music-lrc-box");
   const playBtn = root.querySelector(".vh-music-play");
@@ -51,21 +138,24 @@ const bindStage = (ap: any, tracks: MusicTrack[], root: Element) => {
   const lrc = root.querySelector(".aplayer-lrc");
   if (lrcBox) lrcBox.innerHTML = "";
   if (lrc && lrcBox) lrcBox.appendChild(lrc);
+  bindLrcScroll(ap, root);
+  requestAnimationFrame(() => syncLrcScroll(root, ap.lrc));
 
   const paint = () => {
     const index = ap.list?.index ?? 0;
     const track = tracks[index] || tracks[0];
     if (!track) return;
     if (cover && cover.getAttribute("src") !== track.cover) cover.setAttribute("src", track.cover);
-    if (title) title.textContent = track.name;
-    if (artist) artist.textContent = track.artist;
   };
 
   const paintTime = () => {
     const duration = ap.audio.duration || 0;
     const current = ap.audio.currentTime || 0;
-    if (played) played.style.width = duration ? `${(current / duration) * 100}%` : "0%";
+    const ratio = duration ? (current / duration) * 100 : 0;
+    if (played) played.style.width = `${ratio}%`;
     if (time) time.textContent = `${fmt(current)} / ${fmt(duration)}`;
+    const plProgress = root.querySelector<HTMLElement>(".vh-music-pl-item.is-active .vh-music-pl-progress i");
+    if (plProgress) plProgress.style.width = `${ratio}%`;
   };
 
   const paintLoop = () => {
@@ -76,21 +166,24 @@ const bindStage = (ap: any, tracks: MusicTrack[], root: Element) => {
   paintLoop();
   if (vol) vol.value = String(ap.audio.volume ?? 0.7);
 
-  ap.on("listswitch", () => paint());
+  ap.on("listswitch", () => {
+    paint();
+    syncPlaylist(ap, root, !ap.paused);
+  });
   ap.on("playing", () => paint());
   ap.on("canplay", () => paint());
   ap.on("play", () => {
     stage?.classList.add("is-playing");
     if (playBtn) playBtn.textContent = "暂停";
+    syncPlaylist(ap, root, true);
   });
   ap.on("pause", () => {
     stage?.classList.remove("is-playing");
     if (playBtn) playBtn.textContent = "播放";
+    syncPlaylist(ap, root, false);
   });
   ap.audio.addEventListener("timeupdate", paintTime);
   ap.audio.addEventListener("durationchange", paintTime);
-  root.querySelector(".aplayer-list")?.addEventListener("click", () => setTimeout(paint, 0));
-
   root.querySelector(".vh-music-prev")?.addEventListener("click", () => ap.skipBack());
   playBtn?.addEventListener("click", () => ap.toggle());
   root.querySelector(".vh-music-disc-toggle")?.addEventListener("click", () => ap.toggle());
@@ -132,8 +225,6 @@ export default async (MusicList: any[]) => {
           <button type="button" class="vh-music-disc-toggle" aria-label="播放或暂停"></button>
         </div>
         <div class="vh-music-meta">
-          <h2 class="vh-music-title"></h2>
-          <p class="vh-music-artist"></p>
           <div class="vh-music-lrc-box"></div>
           <div class="vh-music-controls">
             <div class="vh-music-bar"><i class="vh-music-played"></i></div>
@@ -148,7 +239,8 @@ export default async (MusicList: any[]) => {
           </div>
         </div>
       </div>
-      <div class="vh-music-player"></div>
+      <div class="vh-music-playlist"></div>
+      <div class="vh-music-player vh-music-engine" aria-hidden="true"></div>
     </div>`;
 
   const container = box.querySelector(".vh-music-player");
@@ -167,15 +259,14 @@ export default async (MusicList: any[]) => {
       audio: toAudio(tracks),
       lrcType: 3,
       loop: "all",
-      listFolded: false,
-      listMaxHeight: "360px",
+      listFolded: true,
       preload: "metadata",
     });
     MusicList.push(ap);
+    bindPlaylist(ap, tracks, page);
     bindStage(ap, tracks, page);
+    syncPlaylist(ap, page, !ap.paused);
     bindSpace(ap);
-    const nativeBar = container.querySelector<HTMLElement>(".aplayer-body");
-    if (nativeBar) nativeBar.style.display = "none";
   };
 
   mount(MUSIC_LIST);

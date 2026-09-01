@@ -216,6 +216,7 @@
           overflow: hidden;
 
           .vh-music-page {
+            position: relative;
             width: 100%;
           }
 
@@ -419,23 +420,70 @@
             z-index: 1;
             flex: 1;
             min-width: 0;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
           }
 
-          .vh-music-title {
+          .vh-music-lrc-box {
+            flex: 1;
+            min-height: 12rem;
             margin: 0;
-            font-size: 1.35rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-          }
+            display: flex;
 
-          .vh-music-artist {
-            margin: 0.35rem 0 0.8rem;
-            font-size: 0.88rem;
-            opacity: 0.72;
+            .aplayer-lrc {
+              display: block !important;
+              flex: 1;
+              width: 100%;
+              position: relative !important;
+              margin: 0 !important;
+              height: 13.5rem !important;
+              min-height: 13.5rem !important;
+              overflow: hidden !important;
+              text-align: center;
+              mask-image: linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent);
+
+              &:after,
+              &:before {
+                display: none;
+              }
+
+              .aplayer-lrc-contents {
+                transition: transform 0.35s ease-out;
+              }
+
+              p {
+                box-sizing: border-box;
+                height: 2.2rem !important;
+                min-height: 2.2rem !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                color: rgba(255, 255, 255, 0.38) !important;
+                font-size: 0.98rem !important;
+                line-height: 2.2rem !important;
+                opacity: 0.38;
+                transition: color 0.25s ease, font-size 0.25s ease, opacity 0.25s ease;
+              }
+
+              .aplayer-lrc-current {
+                height: 2.85rem !important;
+                min-height: 2.85rem !important;
+                color: #fff !important;
+                font-size: 1.32rem !important;
+                line-height: 2.85rem !important;
+                font-weight: 600;
+                opacity: 1 !important;
+                letter-spacing: 0.02em;
+                text-shadow: 0 0 20px color-mix(in srgb, var(--vh-main-color) 85%, transparent);
+              }
+            }
           }
 
           .vh-music-controls {
-            margin-top: 0.8rem;
+            margin-top: 0.55rem;
           }
 
           .vh-music-bar {
@@ -497,47 +545,223 @@
             }
           }
 
-          .vh-music-lrc-box {
-            .aplayer-lrc {
-              position: relative !important;
-              margin: 0 !important;
-              height: 8.6rem !important;
-              mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+          .vh-music-playlist {
+            margin-top: 0.75rem;
+            padding: 1rem 1.05rem 0.85rem;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 0.75rem;
+            background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+          }
 
-              &:after,
-              &:before {
-                display: none;
-              }
+          .vh-music-pl-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.65rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+          }
 
-              p {
-                color: rgba(255, 255, 255, 0.45) !important;
-                font-size: 0.92rem !important;
-                line-height: 1.9rem !important;
-              }
+          .vh-music-pl-title {
+            font-size: 0.92rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            color: var(--vh-font-33, #333);
+          }
 
-              .aplayer-lrc-current {
-                color: #fff !important;
-                font-size: 1.05rem !important;
-                text-shadow: 0 0 16px color-mix(in srgb, var(--vh-main-color) 80%, transparent);
-              }
+          .vh-music-pl-count {
+            flex-shrink: 0;
+            font-size: 0.72rem;
+            letter-spacing: 0.04em;
+            color: var(--vh-font-66, #666);
+          }
+
+          .vh-music-pl-scroll {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            max-height: 22rem;
+            overflow: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 0, 0, 0.12) transparent;
+
+            &::-webkit-scrollbar {
+              width: 4px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              border-radius: 99px;
+              background: rgba(0, 0, 0, 0.12);
             }
           }
 
-          .vh-music-player {
-            .aplayer {
-              margin: 0;
-              box-shadow: none;
+          .vh-music-pl-item {
+            position: relative;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 0.85rem;
+            width: 100%;
+            min-height: 3.65rem;
+            padding: 0.72rem 0.35rem 0.82rem;
+            border: 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 0;
+            background: transparent;
+            color: inherit;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.22s ease;
+
+            &:last-child {
+              border-bottom: 0;
+            }
+
+            &::before {
+              content: '';
+              position: absolute;
+              left: 0;
+              top: 0.72rem;
+              bottom: 0.72rem;
+              width: 2px;
+              border-radius: 99px;
               background: transparent;
+              transition: background 0.22s ease;
+            }
 
-              .aplayer-body {
-                display: none !important;
-                height: 0 !important;
-                overflow: hidden !important;
+            &:hover {
+              background: rgba(0, 0, 0, 0.025);
+            }
+
+            &.is-active {
+              background: rgba(0, 0, 0, 0.03);
+
+              &::before {
+                background: var(--vh-main-color);
               }
 
-              .aplayer-list {
-                margin: 0;
+              .vh-music-pl-name {
+                color: var(--vh-font-33, #333);
               }
+
+              .vh-music-pl-index {
+                color: var(--vh-main-color);
+              }
+            }
+
+            &.is-playing .vh-music-pl-index::after {
+              opacity: 1;
+            }
+          }
+
+          .vh-music-pl-cover {
+            flex-shrink: 0;
+            width: 2.65rem;
+            height: 2.65rem;
+
+            img {
+              width: 100%;
+              height: 100%;
+              border-radius: 0.42rem;
+              object-fit: cover;
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            }
+          }
+
+          .vh-music-pl-info {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.18rem;
+          }
+
+          .vh-music-pl-name {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--vh-font-33, #333);
+            letter-spacing: 0.01em;
+          }
+
+          .vh-music-pl-artist {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 0.74rem;
+            color: var(--vh-font-66, #666);
+          }
+
+          .vh-music-pl-index {
+            position: relative;
+            flex-shrink: 0;
+            min-width: 1.75rem;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            color: rgba(0, 0, 0, 0.28);
+            text-align: right;
+
+            &::after {
+              content: '';
+              position: absolute;
+              right: -0.15rem;
+              top: 50%;
+              width: 0.32rem;
+              height: 0.32rem;
+              border-radius: 50%;
+              background: var(--vh-main-color);
+              opacity: 0;
+              transform: translateY(-50%);
+              transition: opacity 0.22s ease;
+            }
+          }
+
+          .vh-music-pl-progress {
+            position: absolute;
+            left: 3.5rem;
+            right: 2.2rem;
+            bottom: 0.35rem;
+            height: 1px;
+            background: rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.22s ease;
+
+            i {
+              display: block;
+              width: 0;
+              height: 100%;
+              background: color-mix(in srgb, var(--vh-main-color) 75%, #999);
+            }
+          }
+
+          .vh-music-pl-item.is-active .vh-music-pl-progress {
+            opacity: 1;
+          }
+
+          .vh-music-engine {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            margin: -1px !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+            pointer-events: none !important;
+
+            .aplayer,
+            .aplayer-body,
+            .aplayer-list,
+            .aplayer-lrc,
+            .aplayer-notice,
+            .aplayer-miniswitcher {
+              display: none !important;
             }
           }
         }
@@ -756,6 +980,15 @@
             .vh-music-stage {
               flex-direction: column;
               text-align: center;
+
+              .vh-music-lrc-box .aplayer-lrc {
+                height: 11.5rem !important;
+                min-height: 11.5rem !important;
+              }
+            }
+
+            .vh-music-pl-scroll {
+              max-height: 18rem;
             }
           }
 
