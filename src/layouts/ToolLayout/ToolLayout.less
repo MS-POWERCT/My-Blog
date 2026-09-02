@@ -425,6 +425,28 @@
             flex-direction: column;
           }
 
+          .vh-music-lrc-head {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 0.35rem;
+          }
+
+          .vh-music-lrc-full {
+            padding: 0.28rem 0.72rem;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 0.72rem;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease;
+
+            &:hover {
+              background: rgba(255, 255, 255, 0.14);
+              border-color: rgba(255, 255, 255, 0.32);
+            }
+          }
+
           .vh-music-lrc-box {
             flex: 1;
             min-height: 12rem;
@@ -1020,3 +1042,208 @@
       }
     }
   }
+
+// 全屏歌词（车载 / 特斯拉等窄屏场景，挂载 body）
+body.vh-music-lrc-fullscreen-active {
+  overflow: hidden;
+}
+
+.vh-music-lrc-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: none;
+  box-sizing: border-box;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  background:
+    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--vh-main-color) 18%, transparent), transparent 48%),
+    linear-gradient(180deg, #0f141b 0%, #121820 100%);
+  color: #fff;
+
+  &.is-open {
+    display: flex;
+  }
+
+  .vh-music-lrc-fs-inner {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    min-height: 100dvh;
+    padding: 0.85rem 1rem 1rem;
+  }
+
+  .vh-music-lrc-fs-head {
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .vh-music-lrc-fs-exit {
+    position: relative;
+    z-index: 3;
+    padding: 0.55rem 1rem;
+    min-height: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .vh-music-lrc-fs-meta {
+    min-width: 0;
+    text-align: center;
+
+    .vh-music-lrc-fs-title {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .vh-music-lrc-fs-artist {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      margin-top: 0.12rem;
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.58);
+    }
+  }
+
+  .vh-music-lrc-fs-time {
+    flex-shrink: 0;
+    font-size: 0.76rem;
+    color: rgba(255, 255, 255, 0.72);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .vh-music-lrc-fs-body {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+
+    .vh-music-lrc-box {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+
+      .aplayer-lrc {
+        display: block !important;
+        flex: 1;
+        width: 100%;
+        position: relative !important;
+        margin: 0 !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
+        text-align: center;
+        mask-image: linear-gradient(
+          180deg,
+          transparent 0%,
+          rgba(0, 0, 0, 0.15) 14%,
+          #000 28%,
+          #000 72%,
+          rgba(0, 0, 0, 0.15) 86%,
+          transparent 100%
+        );
+
+        &:after,
+        &:before {
+          display: none;
+        }
+
+        .aplayer-lrc-contents {
+          transition: transform 0.35s ease-out;
+        }
+
+        p {
+          box-sizing: border-box;
+          height: auto !important;
+          min-height: 4.5rem !important;
+          margin: 0 !important;
+          padding: 0.55rem 1rem !important;
+          overflow: visible;
+          white-space: normal;
+          word-break: break-word;
+          color: rgba(255, 255, 255, 0.78) !important;
+          font-size: clamp(1.45rem, 5vw, 2.25rem) !important;
+          line-height: 1.28 !important;
+          font-weight: 500;
+          opacity: 0.72 !important;
+          letter-spacing: 0.02em;
+        }
+
+        .aplayer-lrc-current {
+          min-height: 6.5rem !important;
+          padding: 0.75rem 1rem !important;
+          color: #fff !important;
+          font-size: clamp(2.2rem, 8.5vw, 4rem) !important;
+          line-height: 1.22 !important;
+          font-weight: 700;
+          opacity: 1 !important;
+          letter-spacing: 0.04em;
+          text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+        }
+      }
+    }
+  }
+
+  .vh-music-lrc-fs-foot {
+    flex-shrink: 0;
+    margin-top: 0.75rem;
+  }
+
+  .vh-music-bar--fs {
+    height: 8px;
+    margin-bottom: 0.85rem;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.16);
+    cursor: pointer;
+    overflow: hidden;
+
+    .vh-music-played--fs {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--vh-main-color), #fff);
+    }
+  }
+
+  .vh-music-lrc-fs-toolbar {
+    display: flex;
+    justify-content: center;
+    gap: 0.65rem;
+
+    button {
+      min-width: 5.5rem;
+      min-height: 2.75rem;
+      padding: 0.45rem 1rem;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+
+    .vh-music-play--fs {
+      min-width: 6.5rem;
+      background: var(--vh-main-color);
+    }
+  }
+}

@@ -16,6 +16,160 @@ const toAudio = (tracks: MusicTrack[]) =>
   }));
 
 let spaceHandler: ((e: KeyboardEvent) => void) | null = null;
+let escapeHandler: ((e: KeyboardEvent) => void) | null = null;
+let lrcFullscreen = false;
+let fsOverlay: HTMLElement | null = null;
+let stageLrcBoxRef: HTMLElement | null = null;
+let fsLrcBoxRef: HTMLElement | null = null;
+
+let fsShellReady = false;
+let musicAp: any = null;
+let musicTracks: MusicTrack[] = [];
+let musicRoot: Element | null = null;
+
+const closeLrcFullscreen = () => {
+  const lrcEl = fsLrcBoxRef?.querySelector(".aplayer-lrc");
+  if (lrcEl && stageLrcBoxRef) stageLrcBoxRef.appendChild(lrcEl);
+  fsOverlay?.classList.remove("is-open");
+  fsOverlay?.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("vh-music-lrc-fullscreen-active");
+  lrcFullscreen = false;
+  if (musicRoot && musicAp?.lrc) {
+    requestAnimationFrame(() => {
+      syncLrcScroll(musicAp.lrc);
+      requestAnimationFrame(() => syncLrcScroll(musicAp.lrc));
+    });
+  }
+};
+
+const getLrcWrap = () =>
+  fsLrcBoxRef?.querySelector<HTMLElement>(".aplayer-lrc") ||
+  stageLrcBoxRef?.querySelector<HTMLElement>(".aplayer-lrc");
+
+const ensureLrcFullscreenShell = () => {
+  if (fsOverlay) return fsOverlay;
+
+  fsOverlay = document.createElement("div");
+  fsOverlay.className = "vh-music-lrc-fullscreen";
+  fsOverlay.setAttribute("aria-hidden", "true");
+  fsOverlay.innerHTML = `
+    <div class="vh-music-lrc-fs-inner">
+      <header class="vh-music-lrc-fs-head">
+        <button type="button" class="vh-music-lrc-fs-exit">退出全屏</button>
+        <div class="vh-music-lrc-fs-meta">
+          <strong class="vh-music-lrc-fs-title"></strong>
+          <span class="vh-music-lrc-fs-artist"></span>
+        </div>
+        <span class="vh-music-lrc-fs-time">00:00 / 00:00</span>
+      </header>
+      <div class="vh-music-lrc-fs-body">
+        <div class="vh-music-lrc-box"></div>
+      </div>
+      <footer class="vh-music-lrc-fs-foot">
+        <div class="vh-music-bar vh-music-bar--fs"><i class="vh-music-played vh-music-played--fs"></i></div>
+        <div class="vh-music-lrc-fs-toolbar">
+          <button type="button" class="vh-music-prev--fs">上一首</button>
+          <button type="button" class="vh-music-play--fs">播放</button>
+          <button type="button" class="vh-music-next--fs">下一首</button>
+        </div>
+      </footer>
+    </div>`;
+  document.body.appendChild(fsOverlay);
+  fsLrcBoxRef = fsOverlay.querySelector(".vh-music-lrc-fs-body .vh-music-lrc-box");
+  return fsOverlay;
+};
+
+const paintFsMeta = () => {
+  const track = musicTracks[musicAp?.list?.index ?? 0] || musicTracks[0];
+  if (!track || !fsOverlay) return;
+  const fsTitle = fsOverlay.querySelector<HTMLElement>(".vh-music-lrc-fs-title");
+  const fsArtist = fsOverlay.querySelector<HTMLElement>(".vh-music-lrc-fs-artist");
+  if (fsTitle) fsTitle.textContent = track.name;
+  if (fsArtist) fsArtist.textContent = track.artist;
+};
+
+const setLrcFullscreen = (on: boolean) => {
+  if (!stageLrcBoxRef || !fsLrcBoxRef) return;
+
+  if (on) {
+    if (lrcFullscreen) return;
+    const lrcEl = stageLrcBoxRef.querySelector(".aplayer-lrc");
+    if (!lrcEl) return;
+    fsLrcBoxRef.appendChild(lrcEl);
+    fsOverlay?.classList.add("is-open");
+    fsOverlay?.setAttribute("aria-hidden", "false");
+    document.body.classList.add("vh-music-lrc-fullscreen-active");
+    lrcFullscreen = true;
+    paintFsMeta();
+    requestAnimationFrame(() => {
+      syncLrcScroll(musicAp?.lrc);
+      requestAnimationFrame(() => syncLrcScroll(musicAp?.lrc));
+    });
+  } else {
+    closeLrcFullscreen();
+  }
+};
+
+const toggleLrcFullscreen = () => setLrcFullscreen(!lrcFullscreen);
+
+const paintFsTime = (current: number, duration: number, ratio: number) => {
+  const fsTime = fsOverlay?.querySelector<HTMLElement>(".vh-music-lrc-fs-time");
+  const fsPlayed = fsOverlay?.querySelector<HTMLElement>(".vh-music-played--fs");
+  if (fsTime) fsTime.textContent = `${fmt(current)} / ${fmt(duration)}`;
+  if (fsPlayed) fsPlayed.style.width = `${ratio}%`;
+};
+
+const bindLrcFullscreen = (ap: any, tracks: MusicTrack[], root: Element) => {
+  musicAp = ap;
+  musicTracks = tracks;
+  musicRoot = root;
+  ensureLrcFullscreenShell();
+  stageLrcBoxRef = root.querySelector<HTMLElement>(".vh-music-stage .vh-music-lrc-box");
+  if (!fsOverlay || !stageLrcBoxRef || !fsLrcBoxRef) return;
+
+  root.querySelector(".vh-music-lrc-full")?.addEventListener("click", toggleLrcFullscreen);
+  root.querySelector(".vh-music-lrc-box")?.addEventListener("dblclick", toggleLrcFullscreen);
+
+  if (!fsShellReady) {
+    fsShellReady = true;
+    fsOverlay.querySelector(".vh-music-lrc-fs-exit")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeLrcFullscreen();
+    });
+    fsOverlay.querySelector(".vh-music-prev--fs")?.addEventListener("click", () => musicAp?.skipBack());
+    fsOverlay.querySelector(".vh-music-play--fs")?.addEventListener("click", () => musicAp?.toggle());
+    fsOverlay.querySelector(".vh-music-next--fs")?.addEventListener("click", () => musicAp?.skipForward());
+    fsOverlay.querySelector(".vh-music-bar--fs")?.addEventListener("click", (e) => {
+      const bar = e.currentTarget as HTMLElement;
+      const rect = bar.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, ((e as MouseEvent).clientX - rect.left) / rect.width));
+      if (musicAp?.audio.duration) musicAp.seek(ratio * musicAp.audio.duration);
+    });
+
+    if (escapeHandler) window.removeEventListener("keydown", escapeHandler);
+    escapeHandler = (e: KeyboardEvent) => {
+      if (e.key !== "Escape" || !fsOverlay?.classList.contains("is-open")) return;
+      closeLrcFullscreen();
+    };
+    window.addEventListener("keydown", escapeHandler);
+  }
+
+  ap.on("listswitch", paintFsMeta);
+  ap.on("play", () => {
+    const btn = fsOverlay?.querySelector<HTMLElement>(".vh-music-play--fs");
+    if (btn) btn.textContent = "暂停";
+  });
+  ap.on("pause", () => {
+    const btn = fsOverlay?.querySelector<HTMLElement>(".vh-music-play--fs");
+    if (btn) btn.textContent = "播放";
+  });
+
+  const fsPlayBtn = fsOverlay?.querySelector<HTMLElement>(".vh-music-play--fs");
+  if (fsPlayBtn) fsPlayBtn.textContent = ap.paused ? "播放" : "暂停";
+
+  return { paintFsMeta };
+};
 
 const bindSpace = (ap: any) => {
   if (spaceHandler) window.removeEventListener("keydown", spaceHandler);
@@ -38,9 +192,9 @@ const fmt = (sec = 0) => {
 };
 
 /** APlayer 内置滚动步长固定 16px，与自定义行高不一致；移出 .aplayer 后还会吃到 display:none */
-const syncLrcScroll = (root: Element, lrc: any) => {
+const syncLrcScroll = (lrc: any) => {
   if (!lrc?.container) return;
-  const wrap = root.querySelector<HTMLElement>(".vh-music-lrc-box .aplayer-lrc");
+  const wrap = getLrcWrap();
   const contents = lrc.container as HTMLElement;
   const lines = contents.querySelectorAll<HTMLElement>("p");
   if (!wrap || !lines.length) return;
@@ -57,11 +211,11 @@ const syncLrcScroll = (root: Element, lrc: any) => {
   contents.style.webkitTransform = `translateY(${y}px)`;
 };
 
-const bindLrcScroll = (ap: any, root: Element) => {
+const bindLrcScroll = (ap: any, _root: Element) => {
   const run = () =>
     requestAnimationFrame(() => {
-      syncLrcScroll(root, ap.lrc);
-      requestAnimationFrame(() => syncLrcScroll(root, ap.lrc));
+      syncLrcScroll(ap.lrc);
+      requestAnimationFrame(() => syncLrcScroll(ap.lrc));
     });
   ap.audio.addEventListener("timeupdate", run);
   ap.on("listswitch", () => {
@@ -139,13 +293,16 @@ const bindStage = (ap: any, tracks: MusicTrack[], root: Element) => {
   if (lrcBox) lrcBox.innerHTML = "";
   if (lrc && lrcBox) lrcBox.appendChild(lrc);
   bindLrcScroll(ap, root);
-  requestAnimationFrame(() => syncLrcScroll(root, ap.lrc));
+  requestAnimationFrame(() => syncLrcScroll(ap.lrc));
+
+  const fs = bindLrcFullscreen(ap, tracks, root);
 
   const paint = () => {
     const index = ap.list?.index ?? 0;
     const track = tracks[index] || tracks[0];
     if (!track) return;
     if (cover && cover.getAttribute("src") !== track.cover) cover.setAttribute("src", track.cover);
+    fs?.paintFsMeta();
   };
 
   const paintTime = () => {
@@ -154,6 +311,7 @@ const bindStage = (ap: any, tracks: MusicTrack[], root: Element) => {
     const ratio = duration ? (current / duration) * 100 : 0;
     if (played) played.style.width = `${ratio}%`;
     if (time) time.textContent = `${fmt(current)} / ${fmt(duration)}`;
+    if (lrcFullscreen) paintFsTime(current, duration, ratio);
     const plProgress = root.querySelector<HTMLElement>(".vh-music-pl-item.is-active .vh-music-pl-progress i");
     if (plProgress) plProgress.style.width = `${ratio}%`;
   };
@@ -204,7 +362,10 @@ const bindStage = (ap: any, tracks: MusicTrack[], root: Element) => {
 
 export default async (MusicList: any[]) => {
   const box = document.querySelector(".vh-tools-main>main.music-main");
-  if (!box) return;
+  if (!box) {
+    closeLrcFullscreen();
+    return;
+  }
 
   const artists = [...new Set(MUSIC_LIST.map((i) => i.artist))];
   const filters = ["全部", ...artists]
@@ -225,6 +386,9 @@ export default async (MusicList: any[]) => {
           <button type="button" class="vh-music-disc-toggle" aria-label="播放或暂停"></button>
         </div>
         <div class="vh-music-meta">
+          <div class="vh-music-lrc-head">
+            <button type="button" class="vh-music-lrc-full">全屏歌词</button>
+          </div>
           <div class="vh-music-lrc-box"></div>
           <div class="vh-music-controls">
             <div class="vh-music-bar"><i class="vh-music-played"></i></div>
@@ -250,6 +414,7 @@ export default async (MusicList: any[]) => {
   let ap: any = null;
   const mount = (tracks: MusicTrack[]) => {
     if (ap) {
+      closeLrcFullscreen();
       ap.destroy();
       const i = MusicList.indexOf(ap);
       if (i >= 0) MusicList.splice(i, 1);
