@@ -471,6 +471,9 @@
               }
 
               .aplayer-lrc-contents {
+                box-sizing: border-box;
+                /* 首尾留白：前几行/后几行也能滚到视区中间，不会贴顶或贴底 */
+                padding: 42% 0;
                 transition: transform 0.35s ease-out;
               }
 
@@ -1167,6 +1170,8 @@ body.vh-music-lrc-fullscreen-active {
         }
 
         .aplayer-lrc-contents {
+          box-sizing: border-box;
+          padding: 42% 0;
           transition: transform 0.35s ease-out;
         }
 
