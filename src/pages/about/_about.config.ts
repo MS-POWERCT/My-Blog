@@ -10,7 +10,7 @@ export interface AboutConfig {
   BannerTitle: string;
   /** Banner 副标题 */
   BannerSubtitle: string;
-  /** 头像路径 (留空则使用顶部 Author 头像) */
+  /** 头像路径（关于页已不再展示，保留字段无效果） */
   Avatar: string;
   /** 昵称 */
   Nickname: string;
@@ -50,10 +50,8 @@ const about: AboutConfig = {
   Hello: 'Hi there, I’m Cheng 👋',
   Tags: [
     '🌱 全栈开发',
-    '🎵 音乐爱好者',
-    '✈️ 旅行收集',
     '📚 终身学习',
-    '🍜 美食探索者',
+    '✈️ 旅行收集',
     '🎮 偶尔的游戏党',
   ],
   // 用于自动计算年龄 / 已度过天数
@@ -61,8 +59,8 @@ const about: AboutConfig = {
 
   // ===== 自我介绍 =====
   Intro: [
-    '我是 .Cheng，一位对技术充满热情、涉猎广泛的探索者，同时也是一名热衷于把生活细节记录下来的普通人。',
-    '我始终保持对新技术的热情，并将我的知识与经验分享在我的博客中。前端工程、后端开发、AI 应用、自动化脚本、个人服务器、凡是能把「想象」变成「现实」的东西我都喜欢。',
+    '我是 陈义程，一位对技术充满一些热情、涉猎广泛的探索者，同时也是一名热衷于把生活细节记录下来的普通人。',
+    '并将我的知识与经验分享在我的博客中。前端工程、后端开发、AI 应用、自动化脚本、个人服务器、凡是能把「想象」变成「现实」的东西我都喜欢。',
     '我相信优秀的技术人不仅要有深度，更要有广度，因此我不断学习，并将其转化为实际的作品和解决方案。在这里我会分享我的见解、日常和学习中的整理总结。',
     '<strong>在 Web 开发方面</strong>，我熟悉 Vue  生态圈，关注现代 CSS、Astro 等构建工具，以及前端性能优化、代码质量与工程化。',
     '<strong>在后端与云计算领域</strong>，我使用 PHP 开发服务端，也长期接触Nginx、Linux 运维、Cloudflare / 阿里云 等边缘计算与 CDN 方案。',
@@ -107,10 +105,8 @@ const about: AboutConfig = {
   Contacts: [
     { label: '微信',     value: 'Valar_Morghulis426', link: '' },
     { label: 'QQ',       value: '2446762079',          link: 'https://wpa.qq.com/msgrd?v=3&uin=2446762079&site=qq&menu=yes' },
-    // { label: 'Email',    value: 'i@chenyicheng.cn',   link: 'mailto:i@chenyicheng.cn' },
-    { label: 'GitHub',   value: 'MS-POWERCT',          link: 'https://github.com/MS-POWERCT' },
-    { label: '知乎',     value: '陈义程',               link: 'https://www.zhihu.com/people/chen-yi-cheng-73-60' },
-    { label: '小红书',   value: '@陈义程',              link: 'https://www.xiaohongshu.com/user/profile/58647dd96a6a697b89d43c99' },
+    { label: 'Email',    value: 'powerct@126.com',   link: 'mailto:powerct@126.com' },
+    // { label: 'GitHub',   value: 'MS-POWERCT',          link: 'https://github.com/MS-POWERCT' },
     { label: '所在地',   value: '江西 · 上饶',          link: '' },
   ],
 
@@ -122,7 +118,7 @@ const about: AboutConfig = {
     { date: '2024-01', title: '无比寻常的工作',         desc: '工作总是无聊的，但是我必须工作。成年人大部分时间在工作和工作的路上。' },
     // { date: '2024-00', title: '个人 Homelab 搭建',  desc: '基于 Docker / Linux 维护个人服务器、图床、反向代理等基础设施。' },
     { date: '2023-03', title: '旅业拾遗 · 小公司的六个月', desc: '短暂加入一家小型旅行社，虽然公司只存续了半年就停摆了，却是我离「旅行」这个词最近的一段时光。期间了解了跟团游、自由行、半自由行的门道，也把国内外大大小小的景点、线路、签证套路记了一本子。原来诗和远方的背后，全是落地、签单、排期的人间烟火。' },
-    { date: '2021-03', title: '准备启程 · 拥抱加密浪潮', desc: '那阵子链上火得发烫，身边几个朋友都在扎进 Web3 的世界。坐而论道不如起而行之，我决定也躬身入局，和他们一起研究区块链技术。这段经历让我第一次真切理解到「去中心化」这四个字的重量。' },
+    { date: '2021-03', title: '准备启程 · 拥抱加密浪潮', desc: '那时候链上火得发烫，身边几个朋友都在扎进 Web3 的世界。坐而论道不如起而行之，我决定也躬身入局，和他们一起研究区块链技术。这段经历让我第一次真切理解到「去中心化」这四个字的重量。' },
     { date: '2018-12', title: '步入社会 · 蛰伏期', desc: '毕业后的第一站，是一家做工业机器自动化的公司。一待就是两年，那段日子里我学会了如何在快节奏的生产线上沉下心、扎下根——不急躁，不喧哗，像一颗种子在暗处默默积攒破土的力气。' },
     { date: '2017-08', title: '踏上编程之路',       desc: '正式开始接触软件开发，从 Java 到现代全栈一路跌跌撞撞。' },
   ],

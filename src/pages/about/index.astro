@@ -5,7 +5,7 @@ import { getCountInfo } from "@/utils/getPostInfo";
 import Layout from "@/layouts/Layout/Layout.astro";
 import "./_about.less";
 
-const { Title, Avatar, CreateTime } = SITE_CONFIG;
+const { Title, CreateTime } = SITE_CONFIG;
 const countInfo = getCountInfo();
 
 // ===== 计算年龄 / 建站天数 =====
@@ -36,8 +36,6 @@ const diffYears = (from: string) => {
 const age = diffYears(About.BirthDay);
 const siteDays = diffDays(CreateTime);
 const aliveDays = diffDays(About.BirthDay);
-const avatar = About.Avatar || Avatar;
-
 // 个人介绍 (自动加段落包装)
 const IntroHtml = About.Intro.map((p) => `<p>${p}</p>`).join("");
 
@@ -75,12 +73,6 @@ const joinChunk = (arr: number[]) => arr.join(", ");
     <!-- 顶部 Hero 卡 -->
     <div class="vh-about-hero">
       <div class="vh-about-hero-inner">
-        <img
-          class="vh-about-avatar"
-          src={avatar}
-          alt={About.Nickname}
-          loading="lazy"
-        />
         <div class="vh-about-hero-info">
           <div class="vh-about-hero-title">{About.BannerTitle}</div>
           <div class="vh-about-hero-sub">{About.BannerSubtitle}</div>

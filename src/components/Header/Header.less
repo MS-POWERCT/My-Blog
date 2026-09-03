@@ -5,9 +5,10 @@ header.vh-header {
   box-sizing: border-box;
   width: 100vw;
   height: 66px;
-  backdrop-filter: blur(2rem);
-  background-color: rgba(255, 255, 255, 0.36);
-  box-shadow: var(--vh-box-shadow);
+  backdrop-filter: blur(1.25rem) saturate(-0.15);
+  -webkit-backdrop-filter: blur(1.25rem) saturate(1.15);
+  background-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.45) inset, 0 4px 18px rgba(15, 23, 42, 0.06);
   transition: background-color 0.18s ease-in-out;
   z-index: 9;
 
