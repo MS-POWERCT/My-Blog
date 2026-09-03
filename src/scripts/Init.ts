@@ -27,7 +27,7 @@ import initLinks from "@/scripts/Links";
 import initFriends from "@/scripts/Friends";
 // 动态说说初始化
 import initTalking from "@/scripts/Talking";
-import initMusicPage from "@/scripts/MusicPage";
+import initMusicPage, { cleanupMusicPage } from "@/scripts/MusicPage";
 // 文章评论初始化
 import { checkComment, commentInit } from "@/scripts/Comment";
 // 移动端侧边栏初始化
@@ -109,6 +109,7 @@ export default () => {
     // 销毁音乐
     MusicList.forEach((i: any) => i.destroy());
     MusicList.length = 0;
+    cleanupMusicPage();
   });
   console.log("%c🌻 程序：Astro | 主题：vhAstro-Theme | 作者：Han | Github：https://github.com/uxiaohan/vhAstro-Theme 🌻", "color:#fff; background: linear-gradient(270deg, #18d7d3, #68b7dd, #8695e6, #986fee); padding: 8px 15px; border-radius: 8px");
   console.log("%c\u521D\u59CB\u5316\u5B8C\u6BD5.", "color: #ffffff; background: #000; padding:5px");

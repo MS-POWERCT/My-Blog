@@ -27,19 +27,46 @@ let musicAp: any = null;
 let musicTracks: MusicTrack[] = [];
 let musicRoot: Element | null = null;
 
+const hideFsOverlay = () => {
+  if (!fsOverlay) return;
+  fsOverlay.classList.remove("is-open");
+  fsOverlay.style.display = "none";
+  fsOverlay.setAttribute("aria-hidden", "true");
+};
+
+const showFsOverlay = () => {
+  if (!fsOverlay) return;
+  fsOverlay.classList.add("is-open");
+  fsOverlay.style.display = "flex";
+  fsOverlay.setAttribute("aria-hidden", "false");
+};
+
 const closeLrcFullscreen = () => {
   const lrcEl = fsLrcBoxRef?.querySelector(".aplayer-lrc");
-  if (lrcEl && stageLrcBoxRef) stageLrcBoxRef.appendChild(lrcEl);
-  fsOverlay?.classList.remove("is-open");
-  fsOverlay?.setAttribute("aria-hidden", "true");
+  if (lrcEl && stageLrcBoxRef?.isConnected) stageLrcBoxRef.appendChild(lrcEl);
+  hideFsOverlay();
   document.body.classList.remove("vh-music-lrc-fullscreen-active");
   lrcFullscreen = false;
-  if (musicRoot && musicAp?.lrc) {
+  if (musicRoot?.isConnected && musicAp?.lrc) {
     requestAnimationFrame(() => {
       syncLrcScroll(musicAp.lrc);
       requestAnimationFrame(() => syncLrcScroll(musicAp.lrc));
     });
   }
+};
+
+/** 离开音乐页 / 销毁播放器时调用，避免全屏层残留在其它页面 */
+export const cleanupMusicPage = () => {
+  closeLrcFullscreen();
+  fsOverlay?.remove();
+  fsOverlay = null;
+  fsLrcBoxRef = null;
+  fsShellReady = false;
+  stageLrcBoxRef = null;
+  musicRoot = null;
+  musicAp = null;
+  musicTracks = [];
+  document.body.classList.remove("vh-music-lrc-fullscreen-active");
 };
 
 const getLrcWrap = () =>
@@ -52,6 +79,13 @@ const ensureLrcFullscreenShell = () => {
   fsOverlay = document.createElement("div");
   fsOverlay.className = "vh-music-lrc-fullscreen";
   fsOverlay.setAttribute("aria-hidden", "true");
+  Object.assign(fsOverlay.style, {
+    position: "fixed",
+    inset: "0",
+    zIndex: "10000",
+    display: "none",
+    boxSizing: "border-box",
+  });
   fsOverlay.innerHTML = `
     <div class="vh-music-lrc-fs-inner">
       <header class="vh-music-lrc-fs-head">
@@ -96,8 +130,7 @@ const setLrcFullscreen = (on: boolean) => {
     const lrcEl = stageLrcBoxRef.querySelector(".aplayer-lrc");
     if (!lrcEl) return;
     fsLrcBoxRef.appendChild(lrcEl);
-    fsOverlay?.classList.add("is-open");
-    fsOverlay?.setAttribute("aria-hidden", "false");
+    showFsOverlay();
     document.body.classList.add("vh-music-lrc-fullscreen-active");
     lrcFullscreen = true;
     paintFsMeta();
@@ -363,7 +396,7 @@ const bindStage = (ap: any, tracks: MusicTrack[], root: Element) => {
 export default async (MusicList: any[]) => {
   const box = document.querySelector(".vh-tools-main>main.music-main");
   if (!box) {
-    closeLrcFullscreen();
+    cleanupMusicPage();
     return;
   }
 
