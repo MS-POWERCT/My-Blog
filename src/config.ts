@@ -61,6 +61,7 @@ export default {
     { text: '关于', link: '/about', icon: 'Nav_about' },
     { text: '自律青年', link: 'https://m.powerct.cn/#/profile', target: true, icon: 'Nav_link' },
     { text: '文字农场', link: 'https://farm.powerct.cn', target: true, icon: 'Nav_link' },
+    { text: '红飞阁木业', link: 'https://hfg.powerct.cn/', target: true, icon: 'Nav_link' },
   ],
   // 侧边栏个人网站
   WebSites: [

@@ -99,6 +99,7 @@ const about: AboutConfig = {
     { name: '博客',    link: 'https://www.chenyicheng.cn',  highlight: true },
     { name: '自律青年', link: 'https://m.powerct.cn/', highlight: true},
     { name: '文字农场', link: 'https://farm.powerct.cn/', highlight: true},
+    { name: '红飞阁木业', link: 'https://hfg.powerct.cn/', highlight: true },
   ],
 
   // ===== 联系渠道 =====
