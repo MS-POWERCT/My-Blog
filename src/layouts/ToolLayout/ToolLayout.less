@@ -870,7 +870,7 @@
               img {
                 width: 100%;
                 height: auto;
-                aspect-ratio: 3 / 2;
+                aspect-ratio: auto;
                 border-radius: 0.375rem;
                 object-fit: contain;
                 overflow: hidden;
@@ -914,18 +914,38 @@
 
               &>.vh-img-flex {
                 box-sizing: border-box;
-                padding: 0.8rem 0;
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
-                gap: 0.66rem;
+                padding: 0.8rem 0 0.2rem;
+                position: relative;
                 width: 100%;
-                height: max-content;
-                max-height: 50%;
-                overflow: hidden;
 
                 &>img {
-                  height: 100%;
+                  display: block;
+                  width: 100%;
+                  height: auto;
+                  border-radius: 0.375rem;
                   object-fit: cover;
+                }
+
+                // 单张：缩小成卡片，避免长图占满整屏
+                &.is-single {
+                  width: auto;
+                  max-width: 12.5rem;
+                  height: auto !important;
+
+                  &>img {
+                    position: static !important;
+                    width: auto !important;
+                    max-width: 12.5rem;
+                    max-height: 16rem;
+                    height: auto !important;
+                    left: auto !important;
+                    top: auto !important;
+                    object-fit: contain;
+                  }
+                }
+
+                &.is-masonry > img {
+                  position: absolute;
                 }
               }
 
@@ -1021,12 +1041,6 @@
           &.talking-main {
             &>article {
               padding: 1.06rem 0.88rem;
-
-              &>.main {
-                &>.vh-img-flex {
-                  grid-template-columns: repeat(auto-fit, minmax(46%, 1fr));
-                }
-              }
             }
           }
         }

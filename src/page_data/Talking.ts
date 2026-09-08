@@ -7,6 +7,16 @@ export default {
   // 注意：图片请用 vh-img-flex 类包裹（talk 的第二参数会自动生成）
   data: [
     {
+      date: '2026-09-08 23:35',
+      tags: ['日常'],
+      content: talk(`
+        早上拍的。天还没完全亮透，田里一层雾，太阳刚出来，路和稻田都是金的。
+        站在路边看了一会儿，很安静。
+      `, [
+        '/assets/images/talking/2026-09-08-morning.jpg',
+      ])
+    },
+    {
       date: '2026-08-31 22:30',
       tags: ['日常'],
       content: talk(`
