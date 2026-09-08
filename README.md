@@ -21,7 +21,7 @@
 
 | 名称     | 链接                                        |
 | -------- | ------------------------------------------- |
-| 自律青年 | [m.powerct.cn](https://m.powerct.cn/)       |
+| 记了么   | [m.powerct.cn](https://m.powerct.cn/)       |
 | 文字农场 | [farm.powerct.cn](https://farm.powerct.cn/) |
 
 ---

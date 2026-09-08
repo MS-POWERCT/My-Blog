@@ -97,7 +97,7 @@ const about: AboutConfig = {
   Sites: [
     { name: '主页',    link: 'https://point.chenyicheng.cn',  highlight: true },
     { name: '博客',    link: 'https://www.chenyicheng.cn',  highlight: true },
-    { name: '自律青年', link: 'https://m.powerct.cn/', highlight: true},
+    { name: '记了么', link: 'https://m.powerct.cn/', highlight: true},
     { name: '文字农场', link: 'https://farm.powerct.cn/', highlight: true},
     { name: '红飞阁木业', link: 'https://hfg.powerct.cn/', highlight: true },
   ],

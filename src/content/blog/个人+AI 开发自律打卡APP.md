@@ -10,7 +10,7 @@ cover: "/assets/images/banner/536981d29e42bd29.webp"
 date: 2026-07-18 22:45
 ---
 
-网站链接：[自律青年](https://m.powerct.cn/#/profile)
+网站链接：[记了么](https://m.powerct.cn/#/profile)
 
 目前已更新2.0版本，暂时无APP
 
