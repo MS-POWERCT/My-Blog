@@ -1,5 +1,5 @@
 ---
-title: 使用laravel9 + php8 的创建笔记
+title: 技术-使用laravel9 + php8 的创建笔记
 categories: Code
 tags:
   - laravel

@@ -1,11 +1,11 @@
 ---
-title: laravel使用redis命令大全
+title: 技术-laravel使用redis命令大全
 categories: Code
 tags:
   - laravel
   - redis
 id: laravel-redis-notes
-cover: "/assets/images/banner/f37068307476b8b1.webp"
+cover: /assets/images/banner/f37068307476b8b1.webp
 date: 2026-07-17 22:51
 ---
 

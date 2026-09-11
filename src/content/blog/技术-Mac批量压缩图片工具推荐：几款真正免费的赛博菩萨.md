@@ -1,5 +1,5 @@
 ---
-title: Mac 批量压缩图片工具推荐：几款真正免费的「赛博菩萨」
+title: 技术-Mac 批量压缩图片工具推荐：几款真正免费的「赛博菩萨」
 categories: Code
 tags:
   - Mac
@@ -7,7 +7,7 @@ tags:
   - 工具推荐
   - 开源
 id: mac-batch-image-compress-tools
-cover: "/assets/images/banner/745978cb4b533956.webp"
+cover: /assets/images/banner/745978cb4b533956.webp
 date: 2026-08-26 22:45
 ---
 
