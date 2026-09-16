@@ -15,7 +15,17 @@ import "./MobileSidebar.less";
 
 		<div class="vh-mobilesidebar-list vh-link-list">
 			{
-				Navs.map(i => (
+				Navs.map(i => i.children ? (
+					<div class="vh-nav-group">
+						<p>{i.text}</p>
+						{i.children.map(c => (
+							<a href={c.link} target={c.target ? "_blank" : "_self"} rel={c.target ? "noopener noreferrer" : undefined}>
+								<Svg src={c.icon || i.icon} />
+								{c.text}
+							</a>
+						))}
+					</div>
+				) : (
 					<a class={i.link.replace("/", "")} href={i.link} target={i.target ? "_blank" : "_self"}>
 						<Svg src={i.icon} />
 						{i.text}

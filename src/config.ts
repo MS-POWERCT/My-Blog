@@ -59,9 +59,16 @@ export default {
     { text: '昔日', link: '/archives', icon: 'Nav_archives' },
     { text: '留言', link: '/message', icon: 'Nav_message' },
     { text: '关于', link: '/about', icon: 'Nav_about' },
-    { text: '记了么', link: 'https://m.powerct.cn/#/profile', target: true, icon: 'Nav_link' },
-    { text: '文字农场', link: 'https://farm.powerct.cn', target: true, icon: 'Nav_link' },
-    { text: '红飞阁木业', link: 'https://hfg.powerct.cn/', target: true, icon: 'Nav_link' },
+    {
+      text: '小站',
+      icon: 'Nav_link',
+      children: [
+        { text: '记了么', link: 'https://m.powerct.cn/#/profile', target: true, icon: 'Nav_link' },
+        { text: '文字农场', link: 'https://farm.powerct.cn', target: true, icon: 'Nav_link' },
+        { text: '红飞阁木业', link: 'https://hfg.chenyicheng.cn/', target: true, icon: 'Nav_link' },
+        { text: '自走棋工具', link: 'https://autochess.chenyicheng.cn/', target: true, icon: 'Nav_link' },
+      ],
+    },
   ],
   // 侧边栏个人网站
   WebSites: [
